@@ -34146,28 +34146,28 @@ INSERT INTO sign VALUES(10942,'Öxl','gwEng4y0O7E','https://www.youtube.com/watc
 INSERT INTO sign VALUES(10943,'Öxull','5CcgRmRI_mo','https://www.youtube.com/watch?v=5CcgRmRI_mo');
 INSERT INTO sign VALUES(10944,'Ål','a7bZRx2xgEQ','https://www.youtube.com/watch?v=a7bZRx2xgEQ');
 INSERT INTO sign VALUES(10945,'Århus','M1My226ryVE','https://www.youtube.com/watch?v=M1My226ryVE');
-CREATE INDEX idx_sign_phrase ON sign(phrase);
-CREATE INDEX idx_sign_youtube_id ON sign(youtube_id);
-CREATE INDEX idx_sign_id ON sign(id);
-CREATE INDEX idx_sign_related_sign_id ON sign_related(sign_id);
-CREATE INDEX idx_sign_related_related_id ON sign_related(related_id);
-CREATE INDEX idx_sign_collection_sign_id ON sign_collection(sign_id);
-CREATE INDEX idx_sign_collection_collection_id ON sign_collection(collection_id);
-CREATE INDEX idx_sign_related_sign_id_related_id ON sign_related(sign_id,related_id);
-CREATE INDEX idx_sign_collection_sign_collection_id ON sign_collection(sign_id,collection_id);
-CREATE INDEX idx_sign_related_related_id_sign_id ON sign_related(related_id,sign_id);
-CREATE INDEX idx_collection_name on collection(name);
-CREATE INDEX idx_collection_name_id on collection(name,id);
-CREATE INDEX idx_collection_id_name on collection(id,name);
-CREATE INDEX idx_multi on sign (phrase, id);
-CREATE INDEX idx_sign on sign (phrase);
-CREATE INDEX idx_sign_all on sign (phrase,id,youtube_id,youtube_link);
-CREATE INDEX idx_sign_yt_id on sign (youtube_id);
-CREATE INDEX idx_sign_yt_link on sign (youtube_link);
-CREATE INDEX idx_sign_phrase_yt_link on sign (phrase,youtube_link);
-CREATE VIRTUAL TABLE sign_phrase_fts USING FTS5(id,phrase)
+CREATE INDEX IF NOT EXISTS idx_sign_phrase ON sign(phrase);
+CREATE INDEX IF NOT EXISTS idx_sign_youtube_id ON sign(youtube_id);
+CREATE INDEX IF NOT EXISTS idx_sign_id ON sign(id);
+CREATE INDEX IF NOT EXISTS idx_sign_related_sign_id ON sign_related(sign_id);
+CREATE INDEX IF NOT EXISTS idx_sign_related_related_id ON sign_related(related_id);
+CREATE INDEX IF NOT EXISTS idx_sign_collection_sign_id ON sign_collection(sign_id);
+CREATE INDEX IF NOT EXISTS idx_sign_collection_collection_id ON sign_collection(collection_id);
+CREATE INDEX IF NOT EXISTS idx_sign_related_sign_id_related_id ON sign_related(sign_id,related_id);
+CREATE INDEX IF NOT EXISTS idx_sign_collection_sign_collection_id ON sign_collection(sign_id,collection_id);
+CREATE INDEX IF NOT EXISTS idx_sign_related_related_id_sign_id ON sign_related(related_id,sign_id);
+CREATE INDEX IF NOT EXISTS idx_collection_name on collection(name);
+CREATE INDEX IF NOT EXISTS idx_collection_name_id on collection(name,id);
+CREATE INDEX IF NOT EXISTS idx_collection_id_name on collection(id,name);
+CREATE INDEX IF NOT EXISTS idx_multi on sign (phrase, id);
+CREATE INDEX IF NOT EXISTS idx_sign on sign (phrase);
+CREATE INDEX IF NOT EXISTS idx_sign_all on sign (phrase,id,youtube_id,youtube_link);
+CREATE INDEX IF NOT EXISTS idx_sign_yt_id on sign (youtube_id);
+CREATE INDEX IF NOT EXISTS idx_sign_yt_link on sign (youtube_link);
+CREATE INDEX IF NOT EXISTS idx_sign_phrase_yt_link on sign (phrase,youtube_link);
+CREATE VIRTUAL TABLE IF NOT EXISTS sign_phrase_fts USING FTS5(id,phrase)
 /* sign_phrase_fts(id,phrase) */;
-CREATE VIRTUAL TABLE sign_fts USING FTS5(id,phrase,related_signs)
+CREATE VIRTUAL TABLE IF NOT EXISTS sign_fts USING FTS5(id,phrase,related_signs)
 /* sign_fts(id,phrase,related_signs) */;
 PRAGMA writable_schema=ON;
 PRAGMA writable_schema=OFF;
