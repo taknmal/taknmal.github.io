@@ -20,13 +20,53 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/style.css":
+/*!***********************!*\
+  !*** ./src/style.css ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"style.css\");\n\n//# sourceURL=webpack://absurd-example-project/./src/style.css?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var absurd_sql_dist_indexeddb_main_thread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! absurd-sql/dist/indexeddb-main-thread */ \"./node_modules/absurd-sql/dist/indexeddb-main-thread.js\");\n\n__webpack_require__.p = '/';\nfunction init() {\n  let worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(\"src_index_worker_js\"), __webpack_require__.b));\n  // This is only required because Safari doesn't support nested\n  // workers. This installs a handler that will proxy creating web\n  // workers through the main thread\n  (0,absurd_sql_dist_indexeddb_main_thread__WEBPACK_IMPORTED_MODULE_0__.initBackend)(worker);\n  window.worker = worker;\n  worker.onmessage = (ev) => {\n    if(ev.data == 'ready'){\n      window.updateSearch()\n    } else {\n      let div = document.getElementById('results')\n      console.log('fyrir json parse')\n      // let signs;\n      // if(ev){\n      //   signs = JSON.parse(ev.data)\n      // } else {\n      //   signs = []\n      // }\n      // let signs = JSON.parse(ev.data) || []\n      let signs = ev.data || [];\n      // console.log(signs)\n      // console.log('eftir json parse')\n      // div.textContent = \n      if(signs.length){\n        div.innerHTML = signs.map(sign => {\n          return `<div class=\"sign\" onclick=\"showYoutube(this)\" id=\"${sign.id}\" youtube_id=\"${sign.youtube_id}\">\n                      <div class=\"sign-phrase\">\n                          <span>${sign.phrase}</span>\n                          <span class=\"addToListIcon\" onclick=\"addToList(${sign.id})\">\n                      </div>\n                  </div>`\n      }).join('')\n      }\n      // JSON.parse(ev.data).map(sign => {\n      //   let signDiv = document.createElement('div')\n      //   signDiv.textContent = sign.phrase\n      //   div.appendChild(signDiv)\n      //   // return sign.phrase\n      // })\n      // document.body.appendChild(div)\n      // console.log(ev.data)\n    }\n\n    }\n}\n\ninit();\n\n\n//# sourceURL=webpack://absurd-example-project/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var absurd_sql_dist_indexeddb_main_thread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! absurd-sql/dist/indexeddb-main-thread */ \"./node_modules/absurd-sql/dist/indexeddb-main-thread.js\");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _signfts_txt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./signfts.txt */ \"./src/signfts.txt\");\n/* harmony import */ var _signftsdata_txt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./signftsdata.txt */ \"./src/signftsdata.txt\");\n/* harmony import */ var _signftstableftsdata_txt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./signftstableftsdata.txt */ \"./src/signftstableftsdata.txt\");\n\n__webpack_require__.p = '/';\n\n\n\n\nfunction init() {\n  let worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(\"src_index_worker_js\"), __webpack_require__.b));\n  // This is only required because Safari doesn't support nested\n  // workers. This installs a handler that will proxy creating web\n  // workers through the main thread\n  (0,absurd_sql_dist_indexeddb_main_thread__WEBPACK_IMPORTED_MODULE_0__.initBackend)(worker);\n  window.worker = worker;\n  worker.onmessage = (ev) => {\n    if(ev.data == 'ready'){\n      window.updateSearch()\n    } else {\n      let div = document.getElementById('results')\n      console.log('fyrir json parse')\n      // let signs;\n      // if(ev){\n      //   signs = JSON.parse(ev.data)\n      // } else {\n      //   signs = []\n      // }\n      // let signs = JSON.parse(ev.data) || []\n      let signs = ev.data || [];\n      // console.log(signs)\n      // console.log('eftir json parse')\n      // div.textContent = \n      if(signs.length){\n        div.innerHTML = signs.map(sign => {\n          return `<div class=\"sign\" onclick=\"showYoutube(this)\" id=\"${sign.id}\" youtube_id=\"${sign.youtube_id}\">\n                      <div class=\"sign-phrase\">\n                          <span>${sign.phrase}</span>\n                          <span class=\"addToListIcon\" onclick=\"addToList(${sign.id})\">\n                      </div>\n                  </div>`\n      }).join('')\n      }\n      // JSON.parse(ev.data).map(sign => {\n      //   let signDiv = document.createElement('div')\n      //   signDiv.textContent = sign.phrase\n      //   div.appendChild(signDiv)\n      //   // return sign.phrase\n      // })\n      // document.body.appendChild(div)\n      // console.log(ev.data)\n    }\n\n    }\n}\n\ninit();\n\n\n//# sourceURL=webpack://absurd-example-project/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/signfts.txt":
+/*!*************************!*\
+  !*** ./src/signfts.txt ***!
+  \*************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"assets/signfts.txt\";\n\n//# sourceURL=webpack://absurd-example-project/./src/signfts.txt?");
+
+/***/ }),
+
+/***/ "./src/signftsdata.txt":
+/*!*****************************!*\
+  !*** ./src/signftsdata.txt ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"assets/signftsdata.txt\";\n\n//# sourceURL=webpack://absurd-example-project/./src/signftsdata.txt?");
+
+/***/ }),
+
+/***/ "./src/signftstableftsdata.txt":
+/*!*************************************!*\
+  !*** ./src/signftstableftsdata.txt ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"assets/signftstableftsdata.txt\";\n\n//# sourceURL=webpack://absurd-example-project/./src/signftstableftsdata.txt?");
 
 /***/ })
 
