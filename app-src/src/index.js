@@ -1,5 +1,9 @@
 import { initBackend } from 'absurd-sql/dist/indexeddb-main-thread';
 __webpack_public_path__ = '/';
+import './style.css';
+import './signfts.txt';
+import './signftsdata.txt';
+import './signftstableftsdata.txt';
 function init() {
   let worker = new Worker(new URL('./index.worker.js', import.meta.url));
   // This is only required because Safari doesn't support nested

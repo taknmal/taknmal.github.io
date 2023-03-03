@@ -1,17 +1,15 @@
-const PRECACHE = 'precache-v1.0';
+const PRECACHE = 'precache-v1.02';
 const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-  '/itm/index.html',
-  '/itm/',
-  '/itm/style.css',
-  '/itm/manifest.json',
-  '/itm/sql-wasm.js',
-  '/itm/sql-wasm.wasm',
-  '/itm/src_index_worker_js.js',
-  '/itm/vendors-node_modules_absurd-sql_dist_indexeddb-main-thread-worker-e59fee74_js.js',
-  '/itm/vendors-node_modules_jlongster_sql_js_dist_sql-wasm_js-node_modules_absurd-sql_dist_index_js--b6e0c4.js'
+  '/index.html',
+  '/',
+  '/style.css',
+  '/manifest.json',
+  '/sql-wasm.js',
+  '/sql-wasm.wasm',
+  '/src_index_worker_js.js',
 ];
 
 // The install handler takes care of precaching the resources we always need.

@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path = require('path')
 module.exports = {
   devServer: {
     publicPath: '/',
@@ -10,7 +10,7 @@ module.exports = {
     },
     disableHostCheck: true,
     host: '0.0.0.0',
-    port:8083,
+    port:8090,
   },
   entry: './src/index.js',
   mode: 'development',
@@ -21,6 +21,25 @@ module.exports = {
       path: false,
       fs: false
     }
+  },
+  module: {
+    rules:[
+            {
+                test:/\.(css|wasm|wasm.js)$/,
+                loader:'file-loader',
+                options: {
+                  name: '[name].[ext]'
+                }
+            },
+            {
+              test: /\.(pdf|txt)$/,
+              include: path.resolve(__dirname, "src"),
+              type: "asset/resource",
+              generator: {
+                filename: "assets/[name][ext]",
+              },
+            }
+       ]
   },
   plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })]
 };
