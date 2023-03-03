@@ -67,7 +67,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <title>Íslenskt táknmál</title>
-    <link rel="canonical" href="https://odinndagur.github.io/" />
+    <link rel="canonical" href="https://taknmal.github.io/" />
 </head>
 <body>
     <script>
@@ -76,21 +76,29 @@
           navigator.serviceWorker.register('/sw.js', {scope: '/'})
         }
     </script>
-    <div class="container">
+
+    <article>
         <header>
             <a href="./" class="heading">Íslenskt táknmál</a>
-            <!-- <nav>
-                <button onclick=""><i class="material-icons">home</i></button>
-                <button onclick="showUserCollection()"><i class="material-icons">bookmarks</i></button>
-                <button onclick=""><i class="material-icons">settings</i></button>
-            </nav> -->
+
             <div class="sign-search all-signs">
                 <input type="search" name="" id="search-input" placeholder="Search for a sign" oninput="updateSearch()" onchange="updateSearch()">
             </div>
         </header>
-        <div class="search-results all-signs" id="results"></div>
-    </div>
-    
+        
+        <main class="container">
+          <div class="search-results all-signs" id="results"></div>
+          </main>
+          
+          <footer>
+            <nav>
+              <a class="nav-item" href="/"><span class="material-icons">home</span></a>
+              <a class="nav-item" href="/collections"><span class="material-icons">list</span></a>
+              <a class="nav-item" href="/settings"><span class="material-icons">settings</span></a>
+            </nav>
+          </footer>
+    </article>
+
 </body>
 <script>
 function updateSearch(){

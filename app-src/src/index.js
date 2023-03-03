@@ -40,7 +40,7 @@ function init() {
       //   div.appendChild(signDiv)
       //   // return sign.phrase
       // })
-      document.body.appendChild(div)
+      // document.body.appendChild(div)
       // console.log(ev.data)
     }
 
