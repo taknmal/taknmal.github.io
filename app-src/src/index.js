@@ -4,6 +4,7 @@ import './style.css';
 import './signfts.txt';
 import './signftsdata.txt';
 import './signftstableftsdata.txt';
+
 function init() {
   let worker = new Worker(new URL('./index.worker.js', import.meta.url));
   // This is only required because Safari doesn't support nested
@@ -17,17 +18,9 @@ function init() {
     } else {
       let div = document.getElementById('results')
       console.log('fyrir json parse')
-      // let signs;
-      // if(ev){
-      //   signs = JSON.parse(ev.data)
-      // } else {
-      //   signs = []
-      // }
-      // let signs = JSON.parse(ev.data) || []
       let signs = ev.data || [];
-      // console.log(signs)
-      // console.log('eftir json parse')
-      // div.textContent = 
+      if(!signs.length){return}
+      if(!signs[0].phrase){return}
       if(signs.length){
         div.innerHTML = signs.map(sign => {
           return `<div class="sign" onclick="showYoutube(this)" id="${sign.id}" youtube_id="${sign.youtube_id}">
@@ -49,6 +42,8 @@ function init() {
     }
 
     }
+
+    
 }
 
 init();

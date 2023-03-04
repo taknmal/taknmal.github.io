@@ -3,6 +3,7 @@
   --background-color-dark: #212121;
 
   --background-color-active: rgba(0,0,0,0.1);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 @media screen and (max-width: 767px) {
@@ -46,7 +47,7 @@ nav button {
     min-height: 4em;
     display: flex;
     align-items: center;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom,0.3rem);
     /* position: absolute; */
     background-color: var(--background-color-light);
     /* bottom: 0; */
@@ -54,7 +55,7 @@ nav button {
   
   footer nav {
     display: flex;
-    padding: 0 4rem;
+    padding: 0 2rem;
     /* margin-bottom: 2rem; */
     flex-basis: 100%;
     justify-content:space-between;
@@ -62,20 +63,26 @@ nav button {
 
   footer nav a {
     color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /* font-style: italic; */
+    font-weight: normal;
   }
 
   html, body {
     margin: auto;
     /* display: none; */
-    padding: 0;
+    /* padding: 0; */
     /* padding-top: env(safe-area-inset-top,0.3rem); */
     /* padding-bottom: env(safe-area-inset-bottom,0.3rem); */
     padding-right: env(safe-area-inset-right,0.3rem);
     padding-left: env(safe-area-inset-left,0.3rem);
     /* height: calc(100% + env(safe-area-inset-top)); */
     /* height: 100%; */
-    height: calc(100% + env(safe-area-inset-bottom));
-    width: 100%;
+    height: calc(100% + env(safe-area-inset-bottom,0.3rem));
+    width: calc(min(100%,800px));/* 100%;*/
     /* background-color: red; */
   }
 
@@ -86,6 +93,8 @@ nav button {
       flex-wrap: nowrap;
       justify-content: space-between;
       overflow-y: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
 
   }
 
@@ -98,9 +107,10 @@ article {
 }
   
   header {
-    position: sticky;
+    /* position: sticky; */
     text-align: center;
-    padding-top: env(safe-area-inset-top,0.3rem);
+    padding-top: calc(env(safe-area-inset-top,3rem) + 1em);
+    padding-bottom: 2rem;
     /* padding-bottom: env(safe-area-inset-bottom,0.3rem);
     padding-right: env(safe-area-inset-right,0.3rem);
     padding-left: env(safe-area-inset-left,0.3rem); */
@@ -143,6 +153,7 @@ article {
   }
   
   .sign-search {
+    padding-top: 0.5rem;
     width: 80%;
     margin: auto;
   }
@@ -201,7 +212,113 @@ a {
   color: inherit;
   text-decoration: none;
 }
+@media(hover: hover) and (pointer: fine){
+  a:hover {
+    text-decoration: underline;
+  }
+}
 
-a:hover {
-  text-decoration: underline;
+#settings {
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+}
+
+#collections {
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+}
+
+#collections h1 {
+  font-style: italic;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.collection-row {
+  padding: 1rem 0.5rem;
+}
+
+.collection-name {
+  font-weight: normal;
+}
+
+.collection-count {
+  font-weight: lighter;
+}
+
+ /* The switch - the box around the slider */
+ .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row-border {
+  padding-bottom: 1em;
+  border-bottom: 1px solid gray;
 }

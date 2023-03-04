@@ -106,43 +106,51 @@ async function run() {
   
   // Your code
   //  console.log('all done')
-  onmessage = (query) => {
-    // run()
-    console.log(query.data)
+  onmessage = (message) => {
+    console.log(message.data)
     let stmt;
-    // if(!query.data){
-    //   stmt = db.prepare(`select * from sign`)
-    // } else {
-    //   stmt = db.prepare(`select * from sign join sign_fts on sign.id = sign_fts.id where sign_fts match "${query.data}*" order by rank, phrase asc`)
-    // }
-    let searchValue = query.data
-
-    if(!searchValue){
-        stmt = db.prepare(`select * from sign order by phrase asc`)
-    } if (searchValue[0] === '*'){
-        stmt = db.prepare(`select * from sign where phrase like "%${searchValue.substring(1)}%" order by phrase asc`)
-    } 
-    if(searchValue && searchValue[0] != '*') {
-        if(searchValue[searchValue.length-1] != '*'){
-            searchValue = searchValue + '*'
-        }
-        stmt = db.prepare(`select * from sign_fts join sign on sign.id = sign_fts.id where sign_fts match "${searchValue}" order by rank, phrase asc`)
+    if(message.data.type == 'searchValue'){
+      // run()
+      // console.log(query.data)
+      // if(!query.data){
+      //   stmt = db.prepare(`select * from sign`)
+      // } else {
+      //   stmt = db.prepare(`select * from sign join sign_fts on sign.id = sign_fts.id where sign_fts match "${query.data}*" order by rank, phrase asc`)
+      // }
+      let searchValue = message.data.searchValue
+  
+      if(!searchValue){
+          stmt = db.prepare(`select * from sign order by phrase asc`)
+      } if (searchValue[0] === '*'){
+          stmt = db.prepare(`select * from sign where phrase like "%${searchValue.substring(1)}%" order by phrase asc`)
+      } 
+      if(searchValue && searchValue[0] != '*') {
+          if(searchValue[searchValue.length-1] != '*'){
+              searchValue = searchValue + '*'
+          }
+          stmt = db.prepare(`select * from sign_fts join sign on sign.id = sign_fts.id where sign_fts match "${searchValue}" order by rank, phrase asc`)
+      }
+      // let stmt = db.prepare(`select * from sign where phrase like "%${query.data}%"`)
+  
+      // let stmt = db.prepare(`
+      // select * from sign_fts
+      // where phrase match "${query.data}*"
+      // `)
+  
+      // stmt.bind({$phrase:query.data})
     }
-    // let stmt = db.prepare(`select * from sign where phrase like "%${query.data}%"`)
+    if(message.data.type === 'query'){
+      stmt = db.prepare(message.data.query)
+    }
+      let result = []
+      while (stmt.step()) result.push(stmt.getAsObject());
+      // postMessage(JSON.stringify(result))
+      postMessage(result)
+      // postMessage('lol')
+      // console.log(db.exec(`select * from sign where phrase like "%${query.data}%"`))
+    }
 
-    // let stmt = db.prepare(`
-    // select * from sign_fts
-    // where phrase match "${query.data}*"
-    // `)
-
-    // stmt.bind({$phrase:query.data})
-    let result = []
-    while (stmt.step()) result.push(stmt.getAsObject());
-    // postMessage(JSON.stringify(result))
-    postMessage(result)
-    // postMessage('lol')
-    // console.log(db.exec(`select * from sign where phrase like "%${query.data}%"`))
-  }
+    
   if(firstRun){
     firstRun = false;
     console.log('first run')
