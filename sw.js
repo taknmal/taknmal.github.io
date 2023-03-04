@@ -3,27 +3,17 @@ const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-'/sql-asm.js',
-'/worker.sql-wasm.js',
-'/sql-asm-memory-growth.js',
-'/sql-asm-debug.js',
 '/vendors-node_modules_absurd-sql_dist_indexeddb-main-thread-worker-e59fee74_js.js',
 '/968.absurd-fts-sql.js',
 '/index.js',
 '/index.worker copy.js',
-'/worker.sql-asm.js',
 '/absurd-fts-sql.js',
 '/src_index_worker_js.js',
 '/main.js',
-'/sql-wasm.js',
-'/worker.sql-wasm-debug.js',
 '/index.worker.js',
 '/105.absurd-fts-sql.js',
-'/worker.sql-asm-debug.js',
 '/661.absurd-fts-sql.js',
-'/sql-wasm-debug.js',
-'/vendors-node_modules_jlongster_sql_js_dist_sql-wasm_js-node_modules_absurd-sql_dist_index_js--b6e0c4.js',
-'/sw.js'
+'/sw.js',
   '/index.html',
   '/',
   '/style.css',
