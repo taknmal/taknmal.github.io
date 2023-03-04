@@ -1,4 +1,4 @@
-const PRECACHE = 'precache-v1.02';
+const PRECACHE = 'precache-v1.03';
 const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
@@ -6,7 +6,7 @@ const PRECACHE_URLS = [
   '/index.html',
   '/',
   '/style.css',
-  '/manifest.json',
+  '/manifest.webmanifest',
   '/sql-wasm.js',
   '/sql-wasm.wasm',
   '/src_index_worker_js.js',
