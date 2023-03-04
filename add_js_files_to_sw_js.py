@@ -1,6 +1,6 @@
 import os
 
-files = ',\n'.join([f"'/{file}'" for file in os.listdir() if file.endswith('.js') and not 'asm' in file])
+files = ',\n\t'.join([f"'/{file}'" for file in os.listdir() if file.endswith('.js') and not 'asm' in file])
 
 # Read in the file
 with open('sw.js', 'r') as file:
