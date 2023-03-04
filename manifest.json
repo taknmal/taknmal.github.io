@@ -12,5 +12,14 @@
         "type": "image/png",
         "purpose": "any"
       }
+    ],
+    "shortcuts": [
+      {
+        "name": "User sign collections",
+        "short_name": "Collections",
+        "description": "List the sign collections for the user",
+        "url": "/#collections",
+        "icons": [{ "src": "/icons/android-chrome-512x512.png", "sizes": "512x512" }]
+      }
     ]
   }
