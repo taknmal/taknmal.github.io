@@ -3,7 +3,7 @@ const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-'/vendors-node_modules_absurd-sql_dist_indexeddb-main-thread-worker-e59fee74_js.js',
+	'/vendors-node_modules_absurd-sql_dist_indexeddb-main-thread-worker-e59fee74_js.js',
 	'/968.absurd-fts-sql.js',
 	'/index.js',
 	'/index.worker copy.js',

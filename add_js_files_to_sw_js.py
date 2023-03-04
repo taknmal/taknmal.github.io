@@ -9,7 +9,7 @@ with open('sw.js', 'r') as file:
 extra_files = f"'/{file}'"
 
 # Replace the target string
-filedata = filedata.replace('const PRECACHE_URLS = [', 'const PRECACHE_URLS = [\n' + files + ',')
+filedata = filedata.replace('const PRECACHE_URLS = [', 'const PRECACHE_URLS = [\n\t' + files + ',')
 
 # Write the file out again
 with open('sw.js', 'w') as file:
