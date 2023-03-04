@@ -32,12 +32,33 @@ module.exports = {
                 }
             },
             {
+              test:/\sw.js$/,
+              loader:'file-loader',
+              options: {
+                name: '[name].[ext]'
+              }
+          },
+            {
               test: /\.(pdf|txt)$/,
               include: path.resolve(__dirname, "src"),
               type: "asset/resource",
               generator: {
                 filename: "assets/[name][ext]",
               },
+            },
+            {
+              test:/\.(png|jpg|jpeg)$/,
+              loader:'file-loader',
+              options: {
+                name: 'assets/[name].[ext]',
+              }
+            },
+            {
+              test:/\.(webmanifest)$/,
+              loader:'file-loader',
+              options: {
+                name: 'assets/[name].[ext]',
+              }
             }
        ]
   },
