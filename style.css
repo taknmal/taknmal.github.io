@@ -76,6 +76,11 @@ nav button {
     font-size: 2rem;
   }
 
+  .nav-item > .material-symbols-outlined {
+    /* display: none; */
+    font-size: 2rem;
+  }
+
   .nav-text {
     font-size: 0.7rem;
     text-align: center;
@@ -170,7 +175,7 @@ article {
   }
 
   
-  input {
+  #search-input {
     background-color: var(--background-color-light);
     border-radius: 2rem;
     width: 100%;
@@ -330,6 +335,6 @@ input:checked + .slider:before {
 }
 
 .row-border {
-  padding-bottom: 1em;
+  padding: 1em 0;
   border-bottom: 1px solid gray;
 }

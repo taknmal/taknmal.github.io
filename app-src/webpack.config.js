@@ -10,7 +10,7 @@ module.exports = {
     },
     disableHostCheck: true,
     host: '0.0.0.0',
-    port:8090,
+    port:8098,
   },
   entry: './src/index.js',
   mode: 'development',
@@ -32,12 +32,19 @@ module.exports = {
                 }
             },
             {
-              test:/\sw.js$/,
+              test:/sw\.js$/,
               loader:'file-loader',
               options: {
                 name: '[name].[ext]'
               }
-          },
+            },
+            {
+              test:/sponson\.html$/,
+              loader:'file-loader',
+              options: {
+                name: '[name].[ext]'
+              }
+            },
             {
               test: /\.(pdf|txt)$/,
               include: path.resolve(__dirname, "src"),

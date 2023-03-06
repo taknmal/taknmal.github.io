@@ -31,94 +31,46 @@ async function run() {
 
   let db = new SQL.Database(path, { filename: true });
   // You might want to try `PRAGMA page_size=8192;` too!
-  // debugger;
   db.exec(`
   PRAGMA journal_mode=MEMORY;
   `);
-  // console.log(db.exec('select * from sign_fts'))
-  // debugger;
-  
-  // try {
-    //   db.exec('select * from sign limit 5')
-    // } catch (error) {
-      let initDB = false
+  let initDB = false
+  try {
+    db.exec('select * from sign_fts limit 5')
+  } catch (error) {
+    initDB = true
+  }
+  if(initDB){
+    for await (let line of splitTextFileBySemicolon('signfts.txt')) {
+      // console.log(line)
       try {
-        db.exec('select * from sign_fts limit 5')
+        db.exec(line);
       } catch (error) {
-        initDB = true
+        console.error(error)
       }
-      if(initDB){
-        for await (let line of splitTextFileBySemicolon('signfts.txt')) {
-          // console.log(line)
-          try{
-            db.exec(line);
-  
-          } catch (error) {
-            console.error(error)
-          }
+    }
+    for await (let line of splitTextFileBySemicolon('signftsdata.txt')) {
+        // console.log(line)
+        try{
+          db.exec(line);
+        } catch (error) {
+          console.error(error)
         }
-          for await (let line of splitTextFileBySemicolon('signftsdata.txt')) {
-              // console.log(line)
-              try{
-                db.exec(line);
-  
-              } catch (error) {
-                console.error(error)
-              }
-            }
-          for await (let line of splitTextFileBySemicolon('signftstableftsdata.txt')) {
-            // console.log(line)
-            try{
-              db.exec(line);
-    
-            } catch (error) {
-              console.error(error)
-            }
-          }
       }
-        //   debugger;
-          // for await (let line of splitTextFileBySemicolon('signglitchdata.txt')) {
-          //   // console.log(line)
-          //   try{
-          //     db.exec(line);
-
-          //   } catch (error) {
-          //     console.error(error)
-          //   }
-          // }
-          // debugger;
-        //   // console.error('lol yo',error)
-        // }
-        
-        // for await (let line of makeTextFileLineIterator('data.txt')) {
-        //   // console.log(line)
-        //   try {
-        //     db.exec(line);
-            
-        //   } catch (error) {
-        //     console.log('error lol',error)
-        //   }
-        // }
-        //   console.log(db.exec('select * from sign_fts'))
-
-        // debugger;
-  // console.log(db.exec('select * from sign_fts limit 5'))
-  
-  // Your code
-  //  console.log('all done')
-  onmessage = (message) => {
+    for await (let line of splitTextFileBySemicolon('signftstableftsdata.txt')) {
+      // console.log(line)
+      try{
+        db.exec(line);
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  } 
+  onmessage = async (message) => {
     console.log(message.data)
     let stmt;
     if(message.data.type == 'searchValue'){
-      // run()
-      // console.log(query.data)
-      // if(!query.data){
-      //   stmt = db.prepare(`select * from sign`)
-      // } else {
-      //   stmt = db.prepare(`select * from sign join sign_fts on sign.id = sign_fts.id where sign_fts match "${query.data}*" order by rank, phrase asc`)
-      // }
       let searchValue = message.data.searchValue
-  
       if(!searchValue){
           stmt = db.prepare(`select * from sign order by phrase asc`)
       } if (searchValue[0] === '*'){
@@ -130,25 +82,47 @@ async function run() {
           }
           stmt = db.prepare(`select * from sign_fts join sign on sign.id = sign_fts.id where sign_fts match "${searchValue}" order by rank, phrase asc`)
       }
-      // let stmt = db.prepare(`select * from sign where phrase like "%${query.data}%"`)
-  
-      // let stmt = db.prepare(`
-      // select * from sign_fts
-      // where phrase match "${query.data}*"
-      // `)
-  
-      // stmt.bind({$phrase:query.data})
-    }
-    if(message.data.type === 'query'){
-      stmt = db.prepare(message.data.query)
-    }
       let result = []
       while (stmt.step()) result.push(stmt.getAsObject());
-      // postMessage(JSON.stringify(result))
-      postMessage(result)
-      // postMessage('lol')
-      // console.log(db.exec(`select * from sign where phrase like "%${query.data}%"`))
+      postMessage({type:'signs',signs:result})
+      return
     }
+
+    if(message.data.type === 'command'){
+      let resp = await db.exec(message.data.command)
+      if(resp){
+        postMessage({type:'command',command:resp})
+        return
+      }
+    }
+
+    if(message.data.type === 'user-collections'){
+      try {
+        db.exec(`SELECT * FROM user WHERE NAME = "default_user"`)
+      } catch (error) {
+        console.error(error)
+      }
+      let stmt = db.prepare(`SELECT * FROM collection WHERE user_id IN (select id from user where user.name = "default_user")`)
+      let user_collections = []
+      while (stmt.step()){user_collections.push(stmt.getAsObject())}
+      postMessage({type:'user-collections',user_collections})
+    }
+
+    if(message.data.type === 'new-collection'){
+      try {
+        db.exec(`INSERT INTO collection (name, user_id) SELECT "${message.data.newCollectionName}", id from (select id from user where name = "default_user")`)
+      } catch (error) {
+        console.error(error)
+      }
+      let stmt = db.prepare(`SELECT * FROM collection WHERE user_id IN (select id from user where user.name = "default_user")`)
+      let user_collections = []
+      while (stmt.step()){user_collections.push(stmt.getAsObject())}
+      // stmt.step()
+      // user_collections.push(stmt.getAsObject());
+      postMessage({type:'user-collection',user_collections:user_collections})
+      return
+    }
+}
 
     
   if(firstRun){

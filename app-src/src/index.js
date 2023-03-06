@@ -10,7 +10,6 @@ import './sw.js'
 function requireAll(r) { r.keys().forEach(r); }
 requireAll(require.context('./icons/', true, /\.(jpg|jpeg|png)$/));
 requireAll(require.context('./', true, /\.(webmanifest)$/));
-
 function init() {
   let worker = new Worker(new URL('./index.worker.js', import.meta.url));
   // This is only required because Safari doesn't support nested
@@ -19,12 +18,14 @@ function init() {
   initBackend(worker);
   window.worker = worker;
   worker.onmessage = (ev) => {
+    console.log(ev.data)
     if(ev.data == 'ready'){
       window.updateSearch()
-    } else {
+    } 
+    if(ev.data.type === 'signs') {
       let div = document.getElementById('results')
       // console.log('fyrir json parse')
-      let signs = ev.data || [];
+      let signs = ev.data.signs || [];
       if(!signs.length){return}
       if(!signs[0].phrase){return}
       if(signs.length){
@@ -37,6 +38,15 @@ function init() {
                   </div>`
       }).join('')
       }
+    }
+    if(ev.data.type === 'user-collections'){
+      console.log(ev.data.user_collections)
+      document.querySelector('.user-collections').innerHTML = ev.data.user_collections.map(collection => {
+        return `<div class="row sign collection-row">
+        <span class="collection-name">${collection.name}</span>
+        <span class="collection-count">91</span>
+      </div>`
+      }).join('')
     }
 
     }

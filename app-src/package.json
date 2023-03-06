@@ -1,11 +1,11 @@
 {
-  "name": "absurd-example-project",
+  "name": "taknmal",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "serve": "webpack serve",
-    "dev": "webpack serve"
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack serve"
   },
   "dependencies": {
     "@babel/core": "^7.21.0",
