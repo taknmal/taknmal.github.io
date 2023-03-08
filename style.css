@@ -349,8 +349,9 @@ input:checked + .slider:before {
 .video-responsive iframe {
   left: 0;
   top: 0;
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 1rem);
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
   position: absolute;
 }
 
