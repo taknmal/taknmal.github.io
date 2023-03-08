@@ -63,6 +63,10 @@ async function showYoutube(el){
             this.state = { currentQuery: '' }
         }
 
+        componentDidMount(){
+            this.updateSearch()
+        }
+
         updateSearch(query) {
             console.log(query)
             let searchValue = query || ''
@@ -164,7 +168,7 @@ async function showYoutube(el){
         }
         this.state = { signs:[] };
       }
-    
+
       render() {
     
         return (<div id="signs">
