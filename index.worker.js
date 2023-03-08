@@ -70,9 +70,10 @@ async function run() {
     console.log(message.data)
     let stmt;
     if(message.data.type == 'searchValue'){
-      let searchValue = message.data.searchValue
+      // let searchValue = message.data.searchValue
+      const { searchValue, currentSignOffset, signQueryCount} = message.data
       if(!searchValue){
-          stmt = db.prepare(`select * from sign order by phrase asc`)
+          stmt = db.prepare(`select * from sign order by phrase asc limit ${signQueryCount} offset ${currentSignOffset}`)
       } if (searchValue[0] === '*'){
           stmt = db.prepare(`select * from sign where phrase like "%${searchValue.substring(1)}%" order by phrase asc`)
       } 
