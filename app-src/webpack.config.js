@@ -10,7 +10,7 @@ module.exports = {
     },
     disableHostCheck: true,
     host: '0.0.0.0',
-    port:8098,
+    port:8081,
   },
   entry: './src/index.js',
   mode: 'development',
@@ -32,7 +32,7 @@ module.exports = {
                 }
             },
             {
-              test:/sw\.js$/,
+              test:/(sw\.js|app\.js)$/,
               loader:'file-loader',
               options: {
                 name: '[name].[ext]'

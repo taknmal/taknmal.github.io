@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
 	'/index.worker.js',
 	'/105.absurd-fts-sql.js',
 	'/661.absurd-fts-sql.js',
+	'/app.js',
 	'/sw.js',
   '/index.html',
   '/',

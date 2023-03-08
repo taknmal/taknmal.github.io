@@ -5,7 +5,7 @@ import './signfts.txt';
 import './signftsdata.txt';
 import './signftstableftsdata.txt';
 import './sw.js'
-
+import './app.js'
 
 function requireAll(r) { r.keys().forEach(r); }
 requireAll(require.context('./icons/', true, /\.(jpg|jpeg|png)$/));
