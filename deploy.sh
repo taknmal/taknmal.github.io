@@ -1,5 +1,5 @@
 cd app-src
-npx webpack build
+NODE_OPTIONS=--openssl-legacy-provider npx webpack build
 cd ..
 cp -r app-src/dist/* ./
 cp app-src/src/*.js ./
