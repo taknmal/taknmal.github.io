@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path')
+
 module.exports = {
   devServer: {
     publicPath: '/',
@@ -15,7 +16,7 @@ module.exports = {
   entry: './src/index.js',
   mode: 'development',
   resolve: {
-    extensions: ['.dev.js', '.js', '.json', '.wasm'],
+    extensions: ['.dev.js', '.js', '.json', '.wasm', '.jsx'],
     fallback: {
       crypto: false,
       path: false,
@@ -66,6 +67,11 @@ module.exports = {
               options: {
                 name: 'assets/[name].[ext]',
               }
+            },
+            {
+              test: /\.(js|jsx)$/,
+              exclude: /node_modules/,
+              use: ['babel-loader'],
             }
        ]
   },

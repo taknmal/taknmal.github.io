@@ -71,7 +71,7 @@ async function run() {
     let stmt;
     if(message.data.type == 'searchValue'){
       // let searchValue = message.data.searchValue
-      const { searchValue, currentSignOffset, signQueryCount} = message.data
+      let { searchValue, currentSignOffset, signQueryCount} = message.data
       if(!searchValue){
           stmt = db.prepare(`select * from sign order by phrase asc limit ${signQueryCount} offset ${currentSignOffset}`)
       } if (searchValue[0] === '*'){
