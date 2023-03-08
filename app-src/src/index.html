@@ -428,7 +428,7 @@ updateSearch()
       }
 
       }
-      this.state = { liked: false,signs:[] };
+      this.state = { signs:[] };
     }
   
     render() {
@@ -437,7 +437,6 @@ updateSearch()
       }
   
       return (<div id="signs">
-        <button onClick={() => this.setState({ liked: true })}>Like</button>
         {this.state.signs.map(sign => {
           return <Sign sign={sign} key={sign.id}/>
         })}
