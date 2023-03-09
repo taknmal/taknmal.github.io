@@ -85,8 +85,10 @@
 </head>
 <body>
     <script>
-        // register ServiceWorker, remember to use absolute path!
-        if (navigator.serviceWorker) {
+      console.log('fyrir sw')
+      // register ServiceWorker, remember to use absolute path!
+      if (navigator.serviceWorker) {
+          console.log('fyrir registersw')
           navigator.serviceWorker.register('/sw.js', {scope: '/'})
         }
     </script>
