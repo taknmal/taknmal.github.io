@@ -49,8 +49,8 @@ async function showYoutube(el){
         <footer>
               <nav>
                 <Link className="nav-item" to="/"><span className="material-symbols-outlined">home</span><span className="nav-text">Heim</span></Link>
-                <Link className="nav-item" to="/login"><span className="material-symbols-outlined">sign_language</span><span className="nav-text">Öll tákn</span></Link>
-                <Link className="nav-item" to="/register"><span className="material-symbols-outlined">list</span><span className="nav-text">Táknasöfn</span></Link>
+                <Link className="nav-item" to="/allsigns"><span className="material-symbols-outlined">sign_language</span><span className="nav-text">Öll tákn</span></Link>
+                <Link className="nav-item" to="/collections"><span className="material-symbols-outlined">list</span><span className="nav-text">Táknasöfn</span></Link>
                 <Link className="nav-item" to="/settings"><span className="material-symbols-outlined">account_box</span><span className="nav-text">Stillingar</span></Link>
              </nav>
         </footer>
@@ -132,6 +132,7 @@ async function showYoutube(el){
     class SignList extends React.Component {
       constructor(props) {
         super(props);
+        this.signListDomElement = React.createRef()
         window.worker.onmessage = (ev) => {
         // console.log('react',ev.data)
         if(ev.data == 'ready'){
@@ -145,6 +146,7 @@ async function showYoutube(el){
           if(!signs[0].phrase){return}
           if(signs.length){
             this.setState({signs:signs})
+            this.signListDomElement.current.scrollTop = 0
           //   div.innerHTML = signs.map(sign => {
           //     return `<div class="sign" onclick="showYoutube(this)" id="${sign.id}" youtube_id="${sign.youtube_id}">
           //                 <div class="sign-phrase">
@@ -171,7 +173,7 @@ async function showYoutube(el){
 
       render() {
     
-        return (<div id="signs">
+        return (<div id="signs" ref={this.signListDomElement}>
           {this.state.signs.map(sign => {
             return <Sign sign={sign} key={sign.id}/>
           })}
@@ -194,6 +196,21 @@ async function showYoutube(el){
     //   )
     // }
 
+    const HomePage = () => {
+        return (
+            <article className="container">
+                <header>
+                    <span className="heading">Íslenskt táknmál</span>
+                </header>
+                <div>
+                    <h1>Home</h1>
+                </div>
+                <TaknmalNavBar/>
+            </article>
+
+        )
+    }
+
     const AllSignsPage = () => {
         return (
             <article className="container">
@@ -210,7 +227,24 @@ async function showYoutube(el){
                 <header>
                     <span className="heading">Íslenskt táknmál</span>
                 </header>
-                <div></div>
+                <div>
+                    <h1>Settings</h1>
+                </div>
+                <TaknmalNavBar/>
+            </article>
+
+        )
+    }
+
+    const CollectionsPage = () => {
+        return (
+            <article className="container">
+                <header>
+                    <span className="heading">Íslenskt táknmál</span>
+                </header>
+                <div>
+                    <h1>Collections</h1>
+                </div>
                 <TaknmalNavBar/>
             </article>
 
@@ -220,9 +254,9 @@ async function showYoutube(el){
     const App = () => {
         return (
           <ReactRouterDOM.HashRouter>
-            <Route path="/" exact component={AllSignsPage} />
-            <Route path="/login" component={TaknmalNavBar} />
-            <Route path="/register" component={SignList} />
+            <Route path="/" exact component={HomePage} />
+            <Route path="/allsigns" component={AllSignsPage} />
+            <Route path="/collections" component={CollectionsPage} />
             <Route path="/settings" component={SettingsPage} />
             <TaknmalNavBar/>
           </ReactRouterDOM.HashRouter>
