@@ -258,7 +258,7 @@ async function showYoutube(el){
             <Route path="/allsigns" component={AllSignsPage} />
             <Route path="/collections" component={CollectionsPage} />
             <Route path="/settings" component={SettingsPage} />
-            <TaknmalNavBar/>
+            {/* <TaknmalNavBar/> */}
           </ReactRouterDOM.HashRouter>
         //   <article className="container">
         //       <TaknmalSearchHeader/>
