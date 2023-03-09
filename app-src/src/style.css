@@ -29,9 +29,10 @@
     display: flex;
     align-items: center;
     padding-bottom: calc(env(safe-area-inset-bottom,0.3rem) + 0.4rem);
-    /* position: absolute; */
+    position: fixed;
     background-color: var(--background-color-light);
-    /* bottom: 0; */
+    bottom: 0;
+    left: 0;
   }
   
   footer nav {
@@ -79,10 +80,10 @@
   
     .container {
       height: 100%;
-      display: flex;
+      /* display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
-      justify-content: space-between;
+      justify-content: space-between; */
       /* overflow-y: auto; */
       -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;  /* Firefox */
