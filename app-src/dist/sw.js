@@ -3,25 +3,13 @@ const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-	'/vendors-node_modules_absurd-sql_dist_indexeddb-main-thread-worker-e59fee74_js.js',
-	'/968.absurd-fts-sql.js',
-	'/index.js',
-	'/index.worker copy.js',
-	'/absurd-fts-sql.js',
-	'/src_index_worker_js.js',
-	'/main.js',
-	'/index.worker.js',
-	'/105.absurd-fts-sql.js',
-	'/661.absurd-fts-sql.js',
-	'/app.js',
-	'/sw.js',
-  '/index.html',
+  // '/index.html',
   '/',
-  '/style.css',
-  '/manifest.webmanifest',
-  '/sql-wasm.js',
-  '/sql-wasm.wasm',
-  '/src_index_worker_js.js',
+  // '/style.css',
+  // '/manifest.webmanifest',
+  // '/sql-wasm.js',
+  // '/sql-wasm.wasm',
+  // '/src_index_worker_js.js',
 ];
 
 // The install handler takes care of precaching the resources we always need.
