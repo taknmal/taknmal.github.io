@@ -1,5 +1,6 @@
 cd app-src
-npx webpack build
+NODE_OPTIONS=--openssl-legacy-provider npx webpack build
 cd ..
-cp app-src/dist/* ./
-cp app-src/src/*.css ./
+cp -r app-src/dist/* ./
+cp app-src/src/*.js ./
+python3 add_js_files_to_sw_js.py

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { HashRouter, Link, Route, Routes } from 'react-router-dom';
 import { initBackend } from 'absurd-sql/dist/indexeddb-main-thread';
@@ -269,6 +269,11 @@ async function showYoutube(el){
   }
 
   const CollectionsPage = () => {
+    const [collections, setCollections] = useState([]);
+    useEffect(() => {
+      window.promiseWorker.postMessage({type:'exec',command:'select * from collection where user_id = 2'}).then(collections => setCollections(collections))
+      // fetchUsers().then((users) => setUsers(users));
+    }, []);
       return (
           <article className="container">
               <header>
@@ -276,6 +281,9 @@ async function showYoutube(el){
               </header>
               <div>
                   <h1>Collections</h1>
+                  {collections.map(collection => {
+                    return <div>{collection.id} {collection.name} {collection.user_id}</div>
+                  })}
               </div>
               <TaknmalNavBar/>
           </article>
