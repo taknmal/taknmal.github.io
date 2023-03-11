@@ -4,6 +4,8 @@ import IndexedDBBackend from 'absurd-sql/dist/indexeddb-backend';
 let db
 let firstRun = true
 
+var registerPromiseWorker = require('promise-worker/register');
+
 // onmessage = (e) => {
 //   console.log('Message received from main script');
 //   const workerResult = `Result: ${e.data[0] * e.data[1]}`;
@@ -66,6 +68,66 @@ async function run() {
       }
     }
   } 
+
+registerPromiseWorker( async function (message) {
+  console.log(message)
+  let stmt;
+  if(message.type == 'searchValue'){
+    // let searchValue = message.searchValue
+    let { searchValue } = message
+    if(!searchValue){
+        stmt = db.prepare(`select * from sign order by phrase asc limit 500`)
+    } if (searchValue[0] === '*'){
+        stmt = db.prepare(`select * from sign where phrase like "%${searchValue.substring(1)}%" order by phrase asc`)
+    } 
+    if(searchValue && searchValue[0] != '*') {
+        if(searchValue[searchValue.length-1] != '*'){
+            searchValue = searchValue + '*'
+        }
+        stmt = db.prepare(`select * from sign_fts join sign on sign.id = sign_fts.id where sign_fts match "${searchValue}" order by rank, phrase asc`)
+    }
+    let result = []
+    while (stmt.step()) result.push(stmt.getAsObject());
+    // postMessage({type:'signs',signs:result})
+    return result
+  }
+
+  if(message.type === 'exec'){
+    stmt = db.prepare(message.command)
+    let res = []
+    while (stmt.step()){res.push(stmt.getAsObject())}
+    return res
+  }
+
+  if(message.type === 'user-collections'){
+    try {
+      db.exec(`SELECT * FROM user WHERE NAME = "default_user"`)
+    } catch (error) {
+      console.error(error)
+    }
+    let stmt = db.prepare(`SELECT * FROM collection WHERE user_id IN (select id from user where user.name = "default_user")`)
+    let user_collections = []
+    while (stmt.step()){user_collections.push(stmt.getAsObject())}
+    // postMessage({type:'user-collections',user_collections})
+  }
+
+  if(message.type === 'new-collection'){
+    try {
+      db.exec(`INSERT INTO collection (name, user_id) SELECT "${message.newCollectionName}", id from (select id from user where name = "default_user")`)
+    } catch (error) {
+      console.error(error)
+    }
+    let stmt = db.prepare(`SELECT * FROM collection WHERE user_id IN (select id from user where user.name = "default_user")`)
+    let user_collections = []
+    while (stmt.step()){user_collections.push(stmt.getAsObject())}
+    // stmt.step()
+    // user_collections.push(stmt.getAsObject());
+    // postMessage({type:'user-collection',user_collections:user_collections})
+    return user_collections
+  }
+  // return 'pong';
+});
+
   onmessage = async (message) => {
     console.log(message.data)
     let stmt;
