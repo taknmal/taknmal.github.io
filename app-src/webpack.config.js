@@ -15,7 +15,7 @@ module.exports = {
   entry: './src/index.js',
   mode: 'development',
   resolve: {
-    extensions: ['.dev.js', '.js', '.json', '.wasm'],
+    extensions: ['.dev.js', '.js', '.json', '.wasm', 'jsx', 'tsx'],
     fallback: {
       crypto: false,
       path: false,
@@ -24,6 +24,11 @@ module.exports = {
   },
   module: {
     rules:[
+              {
+                test: /\.(js|jsx|tsx|ts)$/,
+                exclude: /node_module/,
+                use: 'babel-loader'
+            },
             {
                 test:/\.(css|wasm|wasm.js)$/,
                 loader:'file-loader',
