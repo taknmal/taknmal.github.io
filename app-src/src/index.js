@@ -271,7 +271,13 @@ async function showYoutube(el){
   const CollectionsPage = () => {
     const [collections, setCollections] = useState([]);
     useEffect(() => {
-      window.promiseWorker.postMessage({type:'exec',command:'select * from collection where user_id = 2'}).then(collections => setCollections(collections))
+      window.promiseWorker.postMessage({
+        type:'exec',
+        command:`select collection.id as collection_id,
+                  collection.name as collection_name,
+                  user.name as user_name
+                  from collection join user on user.id = collection.user_id where user.id = 2`
+      }).then(collections => setCollections(collections))
       // fetchUsers().then((users) => setUsers(users));
     }, []);
       return (
@@ -282,7 +288,7 @@ async function showYoutube(el){
               <div>
                   <h1>Collections</h1>
                   {collections.map(collection => {
-                    return <div>{collection.id} {collection.name} {collection.user_id}</div>
+                    return <div>{collection.collection_id} {collection.collection_name} {collection.user_name}</div>
                   })}
               </div>
               <TaknmalNavBar/>

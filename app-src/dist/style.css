@@ -10,16 +10,32 @@
     input, select, textarea {
       font-size: 16px;
     }
+    footer nav {
+      display: flex;
+      padding: 0 2rem;
+      /* margin-bottom: 2rem; */
+      flex-basis: 100%;
+      justify-content:space-between;
+    }
 }
 
-/* @media screen and (min-width: 768px) {
-  nav {
+@media screen and (min-width: 768px) {
+  /* nav {
     position: fixed;
     top: 10em;
     width: 50%;
     margin: auto;
+  } */
+
+  footer nav {
+    display: flex;
+    padding: 0 6rem;
+    /* margin-bottom: 2rem; */
+    flex-basis: 100%;
+    justify-content:space-around;
   }
-} */
+
+}
 
   footer {
     width: 100%;
@@ -35,13 +51,7 @@
     left: 0;
   }
   
-  footer nav {
-    display: flex;
-    padding: 0 2rem;
-    /* margin-bottom: 2rem; */
-    flex-basis: 100%;
-    justify-content:space-between;
-  }
+
 
   footer nav a {
     color: black;
