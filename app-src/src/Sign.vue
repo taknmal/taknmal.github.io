@@ -1,17 +1,25 @@
 <script>
+import LiteYouTubeEmbed from 'vue-lite-youtube-embed'
+import 'vue-lite-youtube-embed/style.css'
 export default {
+    setup(){
+    },
     props: {
         sign: Object
     },
-  data() {
-    return {
-        youtubeShowing:false
-    }
-  },
-  mounted() {
-    console.log(this.sign)
-  },
-  methods: {
+    // components: [LiteYouTubeEmbed],
+    data() {
+        return {
+            youtubeShowing:false
+        }
+    },
+    mounted() {
+        console.log(this.sign)
+    },
+    methods: {
+    onReady: ((event) => {
+          event.target.playVideo();
+      }),
     showYoutube() {
         this.youtubeShowing = !this.youtubeShowing
     }
@@ -25,18 +33,11 @@ export default {
     <div class="sign-phrase">
         <span>{{ this.sign.phrase }}</span>
     </div>
-    <div class="video-responsive">
-        <iframe
-          width="853"
-          height="480"
-          src="https://www.youtube.com/embed/" + {{ this.sign.youtube_id }}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title="Embedded youtube" 
-          />
-    </div>
-</div>
+    <LiteYouTubeEmbed
+    :id="this.sign.youtube_id"
+    title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
+    />
+  </div>
 </template>
 
 <style scoped>

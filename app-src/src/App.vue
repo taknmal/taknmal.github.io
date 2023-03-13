@@ -3,7 +3,7 @@
 import { ref } from 'vue'
 import Sign from './Sign.vue'
 async function printSigns(){
-    let signs = await window.promiseWorker.postMessage({type:'exec',command:'select * from sign limit 5'})
+    let signs = await window.promiseWorker.postMessage({type:'exec',command:'select * from sign limit 500'})
     console.log(signs)
 }
 
@@ -28,7 +28,7 @@ export default {
     async printSigns(){
         console.log('printsigns')
         console.log(window.promiseWorker)
-        window.promiseWorker.postMessage({type:'exec',command:'select * from sign limit 5'}).then(signs => {
+        window.promiseWorker.postMessage({type:'exec',command:'select * from sign limit 500'}).then(signs => {
             this.signs = signs
         })
         // console.log(signs)
@@ -55,11 +55,23 @@ async mounted() {
 </script>
 
 <template>
-  <div>
-    <input class="sign-search" v-model="this.searchInput" @change="handleSearchInput" @input="handleSearchInput"/>
-    <Sign :sign="sign" v-for="sign in signs">
-        {{ sign }}
-    </Sign>
+  <div class="container">
+    <div class="header">
+        <input class="sign-search" v-model="this.searchInput" @change="handleSearchInput" @input="handleSearchInput"/>
+    </div>
+    <div id="signs">
+        <Sign :sign="sign" v-for="sign in signs">
+            {{ sign }}
+        </Sign>
+    </div>
+
+    <div class="footer">
+        <nav>
+            <a>lol</a>
+            <a>lol</a>
+            <a>lol</a>
+        </nav>
+    </div>
 
   </div>
 </template>
