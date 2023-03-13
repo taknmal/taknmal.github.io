@@ -267,34 +267,88 @@ async function showYoutube(el){
 
       )
   }
+  class CollectionsPage extends React.Component {
+    state = {collections: [],loading:true}
+    constructor(props){
+      super(props)
+    }
 
-  const CollectionsPage = () => {
-    const [collections, setCollections] = useState([]);
-    useEffect(() => {
-      window.promiseWorker.postMessage({
-        type:'exec',
-        command:`select collection.id as collection_id,
-                  collection.name as collection_name,
-                  user.name as user_name
-                  from collection join user on user.id = collection.user_id where user.id = 2`
-      }).then(collections => setCollections(collections))
-      // fetchUsers().then((users) => setUsers(users));
-    }, []);
-      return (
-          <article className="container">
-              <header>
-                  <span className="heading">Íslenskt táknmál</span>
-              </header>
-              <div>
-                  <h1>Collections</h1>
-                  {collections.map(collection => {
-                    return <div>{collection.collection_id} {collection.collection_name} {collection.user_name}</div>
-                  })}
-              </div>
-              <TaknmalNavBar/>
-          </article>
+    async componentDidMount(){
+      try {
+        const collections = await window.promiseWorker.postMessage({
+          type:'exec',
+          command:`select collection.id as collection_id,
+                    collection.name as collection_name,
+                    user.name as user_name
+                    from collection join user on user.id = collection.user_id where user.id = 2`
+        })
+        this.setState({collections:collections,loading:false})
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
-      )
+    render(){
+      if(this.state.collections.length){
+          return (
+            <article className="container">
+                <header>
+                    <span className="heading">Íslenskt táknmál</span>
+                </header>
+                <div>
+                    <h1>Collections</h1>
+                    <input></input>
+                    {!this.state.loading && this.state.collections.map(collection => {
+                      return (
+                      <Collection collection={collection} key={collection.collection_id}/>
+                      )
+                    })}
+                </div>
+                <TaknmalNavBar/>
+            </article>
+        )
+      } else {
+        return <div></div>
+      }
+    }
+  }
+  // const CollectionsPage = () => {
+  //   const [collections, setCollections] = useState([]);
+  //   useEffect(() => {
+  //     window.promiseWorker.postMessage({
+  //       type:'exec',
+  //       command:`select collection.id as collection_id,
+  //                 collection.name as collection_name,
+  //                 user.name as user_name
+  //                 from collection join user on user.id = collection.user_id where user.id = 2`
+  //     }).then(collections => setCollections(collections))
+  //     // fetchUsers().then((users) => setUsers(users));
+  //   }, [setCollections]);
+  //     return (
+  //         <article className="container">
+  //             <header>
+  //                 <span className="heading">Íslenskt táknmál</span>
+  //             </header>
+  //             <div>
+  //                 <h1>Collections</h1>
+  //                 {collections.map(collection => {
+  //                   return <div>{collection.collection_id} {collection.collection_name} {collection.user_name}</div>
+  //                 })}
+  //             </div>
+  //             <TaknmalNavBar/>
+  //         </article>
+
+  //     )
+  // }
+
+  const Collection = (props) => {
+    return (
+        <div className="collection list-item">
+          <h3>{props.collection.collection_name}</h3>
+          <span>{props.collection.user_name}</span>
+          {/* {props.collection.collection_id}   */}
+        </div>
+    )
   }
 
   const App = () => {

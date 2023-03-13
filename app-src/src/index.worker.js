@@ -70,7 +70,7 @@ async function run() {
   } 
 
 registerPromiseWorker( async function (message) {
-  console.log(message)
+  // console.log(message)
   let stmt;
   if(message.type == 'searchValue'){
     // let searchValue = message.searchValue
@@ -129,7 +129,7 @@ registerPromiseWorker( async function (message) {
 });
 
   onmessage = async (message) => {
-    console.log(message.data)
+    // console.log(message.data)
     let stmt;
     if(message.data.type == 'searchValue'){
       // let searchValue = message.data.searchValue
