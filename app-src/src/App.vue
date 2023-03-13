@@ -55,25 +55,30 @@ async mounted() {
 </script>
 
 <template>
-  <div class="container">
-    <div class="header">
-        <input class="sign-search" v-model="this.searchInput" @change="handleSearchInput" @input="handleSearchInput"/>
-    </div>
+  <article class="container">
+    <header class="header">
+        <span class="heading">Íslenskt Táknmál</span>
+        <div class="sign-search all-signs">
+            <input type="search" name="" id="search-input" placeholder="Search for a sign"  v-model="this.searchInput" @change="handleSearchInput" @input="handleSearchInput" />
+        </div>
+        <!-- <input type="search" class="sign-search" v-model="this.searchInput" @change="handleSearchInput" @input="handleSearchInput"/> -->
+    </header>
     <div id="signs">
         <Sign :sign="sign" v-for="sign in signs">
             {{ sign }}
         </Sign>
     </div>
 
-    <div class="footer">
+    <footer class="footer">
         <nav>
-            <a>lol</a>
-            <a>lol</a>
-            <a>lol</a>
+            <a class="nav-item" href="/"><span class="material-symbols-outlined">home</span><span class="nav-text">Heim</span></a>
+            <a class="nav-item" href="/allsigns"><span class="material-symbols-outlined">sign_language</span><span class="nav-text">Öll tákn</span></a>
+            <a class="nav-item" href="/collections"><span class="material-symbols-outlined">list</span><span class="nav-text">Táknasöfn</span></a>
+            <a class="nav-item" href="/settings"><span class="material-symbols-outlined">account_box</span><span class="nav-text">Stillingar</span></a>
         </nav>
-    </div>
+    </footer>
 
-  </div>
+  </article>
 </template>
 
 <style scoped>
