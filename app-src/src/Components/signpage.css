@@ -1,0 +1,66 @@
+.sign {
+    display: flex;
+    flex-direction: column;
+    width: min(95vw, 800px);
+    height: 100%;
+    justify-content: space-between;
+    margin: auto;
+    padding: 0.5rem 0.5rem;
+    /* box-sizing: border-box; */
+}
+
+.sign-phrase {
+    text-align: center;
+    font-weight: 700;
+}
+
+.alternate-video {
+    display: block;
+    flex-basis: 80%;
+    height: auto;
+    padding: 0.5rem;
+    /* width: 80%; */
+    margin: auto;
+}
+
+.sign-info {
+    padding: 1rem 1rem;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    /* align-items: flex-start; */
+    display: grid;
+    /* grid-template-rows: 1fr 1fr; */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* background-color: aqua; */
+}
+.sign-info-item {
+    padding: 0.3rem 0.3rem;
+    /* flex-basis: 50%; */
+    text-align: left;
+    /* border: 1px solid black; */
+}
+
+.handform-img {
+    max-width: 20%;
+}
+
+.sign-info-item > h3 {
+    /* padding: 0; */
+    margin: 0.2rem 0;
+}
+
+.related-signs {
+    justify-content: space-evenly;
+    /* padding: 1rem 0; */
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.small {
+    width: min-content;
+}
