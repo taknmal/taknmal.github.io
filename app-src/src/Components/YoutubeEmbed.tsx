@@ -9,7 +9,7 @@ export const YoutubeEmbed = ({
 }) => {
     useEffect(() => {
         fetch(
-            `http://www.youtube.com/embed/${embedId}?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/itm-dev/`,
+            `http://www.youtube.com/embed/${embedId}?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/`,
             { mode: 'no-cors' }
         )
     }, [])
@@ -22,7 +22,7 @@ export const YoutubeEmbed = ({
                 <iframe
                     width="853"
                     height="480"
-                    src={`https://www.youtube.com/embed/${embedId}?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/itm-dev/`}
+                    src={`https://www.youtube.com/embed/${embedId}?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/`}
                     // srcDoc={`
                     // <style>
                     //     * {

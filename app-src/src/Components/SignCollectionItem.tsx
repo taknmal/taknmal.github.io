@@ -27,7 +27,7 @@ export function SignCollectionItem({
         >
             <Link
                 draggable
-                to={`/itm-dev/signs/${sign.sign_id}`}
+                to={`/signs/${sign.sign_id}`}
                 search={(search) => ({
                     lastSearch: {
                         ...search,

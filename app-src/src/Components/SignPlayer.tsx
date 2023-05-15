@@ -19,7 +19,7 @@ export function SignPlayer(props: any) {
             playlist: props.videoId,
             playsinline: 0,
             controls: 0,
-            // origin: 'https://odinndagur.github.io/itm-dev/',
+            // origin: 'https://odinndagur.github.io/',
             origin: window.location.pathname,
         },
     }
@@ -41,4 +41,4 @@ export function SignPlayer(props: any) {
         </div>
     )
 }
-// ?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/itm-dev/
+// ?mute=1&rel=0&loop=1&playlist=${embedId}&controls=0&playsinline=0&modestbranding=1&origin=https://odinndagur.github.io/

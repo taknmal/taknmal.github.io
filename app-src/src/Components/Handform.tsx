@@ -13,7 +13,7 @@ export function Handform() {
             <p>{search.handform}</p>
             <img
                 className="placeholder-image"
-                src={`/itm-dev/assets/itm-images/handform/${decodeURIComponent(
+                src={`/assets/itm-images/handform/${decodeURIComponent(
                     search.handform!
                 )}.png`}
             />
