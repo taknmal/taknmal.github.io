@@ -11,9 +11,9 @@ export default defineConfig({
         }),
         VitePWA({
             registerType: 'autoUpdate',
-            // devOptions: {
-            //     enabled: true,
-            // },
+            devOptions: {
+                enabled: true,
+            },
             base: '/',
             manifest: {
                 name: 'Íslenskt táknmál',
@@ -58,8 +58,8 @@ export default defineConfig({
 
             // manifestFilename:'/manifest.webmanifest',
             workbox: {
-                // globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
-                globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
+                // globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
                 navigateFallback: 'index.html',
                 maximumFileSizeToCacheInBytes: 70000000,
                 runtimeCaching: [
@@ -85,6 +85,21 @@ export default defineConfig({
                             expiration: {
                                 maxEntries: 10,
                                 maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
+                    {
+                        // https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg
+                        urlPattern: /^https:\/\/i\.ytimg\.com\/.*/i,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'video-thumbnails-cache',
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days
                             },
                             cacheableResponse: {
                                 statuses: [0, 200],

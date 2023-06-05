@@ -1,46 +1,36 @@
 import { useState, useRef, useEffect } from 'react'
 import { Pagination } from './Pagination'
-import { Listbox, Transition } from '@headlessui/react'
-import {
-    addSignToCollection,
-    getCollectionById,
-    getSignByIdJson,
-    getUserById,
-    searchPagedCollectionById,
-} from '../db'
-import { AddSignToCollection } from './AddSignToCollection'
+import { searchPagedCollectionByIdRefactor } from '../db'
 import {
     Link,
     useSearch,
-    MakeGenerics,
     useNavigate,
     useMatch,
 } from '@tanstack/react-location'
 import './SignCollectionPage.css'
-import {
-    useQuery,
-    useMutation,
-    useQueryClient,
-    QueryClient,
-    QueryClientProvider,
-} from '@tanstack/react-query'
-import { AppNavBar } from './AppNavBar'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Header } from './Header'
 import { SignCollectionGenerics, SignGenerics } from './Generics'
 
 import { MyLocationGenerics } from './Generics'
 import { SignCollectionItem } from './SignCollectionItem'
 import { SelectCollection } from './SelectCollection'
+import { SignFilter } from './SignFilter'
 
 export function SignCollectionPage() {
+    const queryClient = useQueryClient()
     const {
         data: { signCollection, user },
     } = useMatch<SignCollectionGenerics & SignGenerics>()
-    const inputRef = useRef<HTMLInputElement>(null)
+    const [editing, setEditing] = useState(false)
+    useEffect(() => {
+        return () => setEditing(false)
+    }, [])
+
+    // const inputRef = useRef<HTMLInputElement>(null)
     const [page, setPage] = useState(1)
     const scrollRef = useRef<HTMLDivElement>(null)
-    const params = new URLSearchParams(window.location.search)
-    const [scroll, setScroll] = useState(0)
+    // const params = new URLSearchParams(window.location.search)
     useEffect(() => {
         setTimeout(() => {
             const scrollTarget = Number(search.scroll) ?? 0
@@ -74,12 +64,12 @@ export function SignCollectionPage() {
 
     const search = useSearch<MyLocationGenerics>()
     useEffect(() => {
-        setPage(Number(params.get('page') ?? 1))
-        setSearchValue(params.get('query') ?? '')
-        if (inputRef.current) {
-            inputRef.current.value = ''
-            inputRef.current.value = params.get('query') ?? ''
-        }
+        setPage(Number(search.page ?? 1))
+        setSearchValue(search.query ?? '')
+        // if (inputRef.current) {
+        //     inputRef.current.value = ''
+        //     inputRef.current.value = params.get('query') ?? ''
+        // }
         window.scrollTo({ top: 0 })
     }, [search.page, search.query])
 
@@ -90,6 +80,7 @@ export function SignCollectionPage() {
         if (query[query.length - 1] != '´') {
             navigate({
                 search: (old) => ({ ...old, query: query, page: 1, scroll: 0 }),
+                replace: true,
             })
             // scrollRef.current?.scrollTo({ top: 0 })
         }
@@ -107,50 +98,111 @@ export function SignCollectionPage() {
     }
     const navigate = useNavigate<MyLocationGenerics>()
 
+    // const [orderBy, setOrderBy] = useState(search.orderBy)
+    // useEffect(() => {
+    //     setOrderBy({ value: 'az', order: 'asc', ...search.orderBy })
+    //     queryClient.invalidateQueries()
+    //     console.log(search)
+    // }, [search.orderBy])
+
     const { data, isPlaceholderData, isLoading, isError } = useQuery({
-        queryKey: ['signs', searchValue, page, 'collectionId: ' + search.id],
+        queryKey: [
+            'signs',
+            search,
+            // searchValue,
+            // page,
+            // 'collectionId: ' + search.id,
+            // 'orderBy: ' + search.orderBy,
+        ],
         queryFn: () =>
-            searchPagedCollectionById({
-                searchValue: searchValue ?? '',
+            searchPagedCollectionByIdRefactor({
+                searchValue: search.query ?? '',
                 collectionId: search.id ?? 1,
                 page: search.page ?? 1,
+                orderBy: search.orderBy ?? { order: 'asc', value: 'az' },
+                handform: search.handform,
+                ordflokkur: search.ordflokkur,
+                efnisflokkur: search.efnisflokkur,
+                myndunarstadur: search.myndunarstadur,
             }),
+
         staleTime: 0,
+        cacheTime: 0,
+        // refetchInterval: 10,
         keepPreviousData: true,
     })
 
-    // if (isLoading) {
-    //     return ''
-    // }
-    // if (isError) {
-    //     return 'Error.'
-    // }
+    if (isLoading) {
+        return <div></div>
+    }
+    if (isError) {
+        return <div>'Error.'</div>
+    }
 
     return (
         <>
             <Header>
-                {/* {data && <h1>{data?.signs[0]?.collection_name}</h1>} */}
-                <SelectCollection
-                    // currentCollection={data?.signs[0]?.collection_name}
-                    currentCollection={
-                        user?.collections?.find(
-                            (collection) => collection.id == search.id
-                        )?.name
-                    }
-                    collections={user?.collections}
-                />
-                <div className="search">
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '0 1rem',
+                    }}
+                >
+                    <div style={{ flexBasis: '100%' }}></div>
+                    <div style={{ flexBasis: '100%' }}>
+                        <SelectCollection
+                            currentCollection={
+                                user?.collections?.find(
+                                    (collection) => collection.id == search.id
+                                )?.name
+                            }
+                            collections={user?.collections}
+                        />
+                    </div>
+                    <div style={{ flexBasis: '100%' }}>
+                        {search.id != 1 && (
+                            <span
+                                style={{
+                                    float: 'right',
+                                    // padding: '0 1rem',
+                                    fontSize: '1.3rem',
+                                    fontStyle: editing ? 'italic' : undefined,
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => setEditing(!editing)}
+                            >
+                                Breyta
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                <div
+                    className="search"
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '1rem',
+                    }}
+                >
                     <input
                         onChange={(event) => handleSearch(event.target.value)}
                         type="search"
                         placeholder="Leita að tákni"
-                        ref={inputRef}
+                        value={searchValue}
+                        // style={{ height: '100%' }}
+                        // ref={inputRef}
                     />
                 </div>
             </Header>
+
             {data && (
                 <div className="signlist" ref={scrollRef}>
                     <Pagination
+                        key={search.page}
                         offset={data.offset}
                         totalPages={data.totalPages}
                         totalSignCount={data.totalSignCount}
@@ -161,7 +213,7 @@ export function SignCollectionPage() {
                     {data.signs.map((sign) => {
                         return (
                             <SignCollectionItem
-                                key={sign.id}
+                                key={sign.sign_id}
                                 sign={sign}
                                 user={user}
                                 currentCollection={search.id}
@@ -171,17 +223,21 @@ export function SignCollectionPage() {
                                     page,
                                     'collectionId: ' + search.id,
                                 ]}
+                                editing={search.id != 1 && editing}
                             />
                         )
                     })}
-                    <Pagination
-                        offset={data.offset}
-                        totalPages={data.totalPages}
-                        totalSignCount={data.totalSignCount}
-                        updatePage={updatePage}
-                        limit={data.limit}
-                        currentPage={page}
-                    />
+                    {data.totalSignCount > 40 &&
+                        page != data.totalPages - 1 && (
+                            <Pagination
+                                offset={data.offset}
+                                totalPages={data.totalPages}
+                                totalSignCount={data.totalSignCount}
+                                updatePage={updatePage}
+                                limit={data.limit}
+                                currentPage={page}
+                            />
+                        )}
                 </div>
             )}
         </>

@@ -8,6 +8,7 @@ export function SignCollectionItem({
     user,
     currentCollection,
     queryKey,
+    editing,
 }) {
     const queryClient = useQueryClient()
 
@@ -17,16 +18,21 @@ export function SignCollectionItem({
             style={{
                 margin: 'auto',
                 // width: '100vw',
-                // height: 'max-content',
+                // backgroundColor: 'red',
                 display: 'flex',
                 justifyContent: 'space-between',
+                padding: '0 1rem',
                 alignItems: 'center',
+                boxShadow: 'var(--card-box-shadow)',
+                borderRadius: '3px',
+                // boxSizing: 'border-box',
             }}
-            className="card"
+            className=""
             key={sign.sign_id}
         >
             <Link
                 draggable
+                className=""
                 to={`/signs/${sign.sign_id}`}
                 search={(search) => ({
                     lastSearch: {
@@ -36,7 +42,9 @@ export function SignCollectionItem({
                 })}
                 style={{
                     // border: '1px solid red',
-                    minHeight: '2rem',
+                    // minHeight: '2rem',
+                    height: '100%',
+                    padding: '1rem',
                     flexGrow: 1,
                 }}
             >
@@ -55,22 +63,26 @@ export function SignCollectionItem({
                             : sign.related_signs}
                     </i>
                 </div>
+                {/* <p>{sign.levenshtein}</p>
+                <p>{sign.levenshtein_sign_phrase}</p>
+                <p>{sign.levenshtein_search_value}</p> */}
                 {/* </div> */}
             </Link>
             <div>
-                <div>
+                <div style={{ display: 'flex', gap: '1rem' }}>
                     <AddSignToCollection
                         id={sign.sign_id}
                         collections={user.collections}
                     />
 
-                    {currentCollection != 1 && (
+                    {editing && (
                         <button
                             className=""
                             style={{
-                                zIndex: 3,
-                                borderRadius: '10px',
+                                // zIndex: 3,
+                                // borderRadius: '10px',
                                 backgroundColor: 'rgba(255,0,0,0.8)',
+                                maxWidth: '2rem',
                             }}
                             onClick={() => {
                                 console.log('deleting sign')
@@ -78,7 +90,7 @@ export function SignCollectionItem({
                                     signId: sign.sign_id,
                                     collectionId: currentCollection,
                                 })
-                                queryClient.invalidateQueries(queryKey)
+                                queryClient.invalidateQueries()
                             }}
                         >
                             <span className="material-icons">remove</span>

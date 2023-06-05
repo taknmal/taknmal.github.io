@@ -9,6 +9,21 @@
         sans-serif;
 }
 
+dialog {
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+    /* border: none; */
+}
+
+dialog::backdrop {
+    /* background-color: var(--secondary-color); */
+    background-color: rgba(127, 127, 127, 0.2);
+}
+dialog select {
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+}
+
 .dark-mode-switch-container {
     padding: calc(env(safe-area-inset-top) + 1rem);
 }
@@ -75,13 +90,17 @@ button {
     background-color: var(--secondary-color);
     color: var(--main-text-color);
 }
-
+dialog button {
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+}
 ul li {
     list-style: none;
 }
 
 #root {
     /* max-height: 100%; */
+    padding-bottom: 4em; /*navbar height*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -104,7 +123,8 @@ header {
     padding-top: env(safe-area-inset-top);
     top: 0;
     background-color: var(--background-color);
-    z-index: 10;
+    z-index: 1000;
+    /* border-bottom: 1px solid var(--main-text-color); */
 }
 @media screen and ((max-height: 400px) or (min-aspect-ratio: 2/1)) {
     header {
@@ -116,6 +136,7 @@ header {
     text-align: center;
     color: var(--main-text-color);
     font-family: 'Faustina';
+    text-decoration: none;
     font-size: 2rem;
     /* font-style: italic; */
     /* padding: 1rem 1rem; */
@@ -177,4 +198,186 @@ header {
 
 .dark-mode-switch:hover {
     cursor: pointer;
+}
+
+/* CSS */
+/* .button-17 {
+    align-items: center;
+    appearance: none;
+    background-color: var(--background-color);
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+        rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: var(--main-text-color);
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: 0.25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform, opacity;
+    z-index: 0;
+}
+
+.button-17:hover {
+    background: var(--accent-color);
+}
+
+.button-17:active {
+    box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+        0 8px 12px 6px rgb(60 64 67 / 15%);
+    outline: none;
+}
+
+.button-17:focus {
+    outline: none;
+    border: 2px solid var(--accent-color);
+}
+
+.button-17:not(:disabled) {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):hover {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+}
+
+.button-17:not(:disabled):focus {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):active {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+        rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+}
+
+.button-17:disabled {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+} */
+
+.button1 {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #ffffff;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #ffffff;
+    text-align: center;
+    transition: all 0.2s;
+}
+.button1:hover {
+    color: #000000;
+    background-color: #ffffff;
+}
+@media all and (max-width: 30em) {
+    .button1 {
+        display: block;
+        margin: 0.4em auto;
+    }
+}
+
+/* CSS */
+button {
+    align-items: center;
+    appearance: none;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px;
+    /* rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0; */
+    box-sizing: border-box;
+    color: var(--main-text-color);
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    /* font-family: 'Google Sans', Roboto, Arial, sans-serif; */
+    /* font-size: 14px; */
+    /* font-weight: 500; */
+    /* height: 48px; */
+    justify-content: center;
+    /* letter-spacing: 0.25px; */
+    /* line-height: normal; */
+    /* max-width: 100%; */
+    /* overflow: visible; */
+    padding: 0.5rem 1rem;
+    /* position: relative; */
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms; */
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    /* width: auto; */
+    will-change: transform, opacity;
+    /* z-index: 0; */
+}
+
+button:hover {
+    background: var(--accent-color);
+    /* color: var(--secondary-color); */
+}
+
+button:active {
+    box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+        0 8px 12px 6px rgb(60 64 67 / 15%);
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+    border: 2px solid var(--accent-color);
+}
+
+button:not(:disabled) {
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px; */
+    box-shadow: var(--card-box-shadow);
+}
+
+button:not(:disabled):hover {
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 6px 10px 4px; */
+    box-shadow: var(--card-hover-box-shadow);
+}
+
+button:not(:disabled):focus {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+button:not(:disabled):active {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+        rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+}
+
+button:disabled {
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+        rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
 }

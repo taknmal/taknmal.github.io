@@ -8,7 +8,6 @@ import {
     useSearch,
     Navigate,
 } from '@tanstack/react-location'
-import { YoutubeEmbed } from './YoutubeEmbed'
 import YouTube from 'react-youtube'
 import './signpage.css'
 import { useEffect } from 'react'
@@ -97,38 +96,53 @@ function SignPage() {
         },
     } = useMatch<SignGenerics>()
 
+    const shareSign = () => {
+        if (navigator.share) {
+            navigator
+                .share({
+                    title: sign?.phrase,
+                    text: `${sign.phrase} á ${window.location.href}`,
+                    url: window.location,
+                })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error))
+        }
+    }
+
     const navigate = useNavigate()
     const search = useSearch<MyLocationGenerics>()
     // const [scroll, setScroll] = useState(0)
     useEffect(() => {
-        // console.log('opened page - handling scroll')
+        console.log('opened page - handling scroll')
         setTimeout(() => {
             const scrollTarget = Number(search.scroll) ?? 0
-            // console.log('scrolltarget: ', scrollTarget)
+            console.log('scrolltarget: ', scrollTarget)
             window.scrollTo({ top: scrollTarget })
         }, 100)
     }, [sign])
     let lastScroll
-    const handleScroll = (event: any) => {
-        // setScroll(window.scrollY)
-        console.log(window.scrollY)
-        console.log(event.currentTarget.scrollY)
-        const currentScroll = window.scrollY
-        if (Math.abs(currentScroll - lastScroll) > 10) {
-            lastScroll = currentScroll
-            navigate({
-                search: (old) => ({
-                    ...old,
-                    scroll: window.scrollY,
-                }),
-                replace: true,
-            })
-        }
-    }
     useEffect(() => {
+        const handleScroll = (event: any) => {
+            // setScroll(window.scrollY)
+            console.log(window.scrollY)
+            console.log(event.currentTarget.scrollY)
+            const currentScroll = window.scrollY
+            if (Math.abs(currentScroll - lastScroll) > 10) {
+                lastScroll = currentScroll
+                navigate({
+                    search: (old) => ({
+                        ...old,
+                        scroll: window.scrollY,
+                    }),
+                    replace: true,
+                })
+            }
+        }
+        console.log('handlescrolluseeffect')
         window.addEventListener('scroll', handleScroll)
 
         return () => {
+            console.log('handle scroll useeffect unmount')
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
@@ -136,27 +150,46 @@ function SignPage() {
     return (
         <div className="sign" id={sign.id} key={sign.id}>
             <Header />
-            {search.lastSearch ? (
-                <Link
-                    className="temp-card"
-                    style={{ width: 'fit-content' }}
-                    to={'/collection'}
-                    search={search.lastSearch}
-                >
-                    &lt; Til baka í leit{' '}
-                    {search.lastSearch.query && (
-                        <i>(„{search.lastSearch.query}“)</i>
-                    )}
-                </Link>
-            ) : (
-                <Link
-                    className="temp-card"
-                    style={{ width: 'fit-content' }}
-                    to={'/collection'}
-                >
-                    &lt; Öll tákn{' '}
-                </Link>
-            )}
+
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {search.lastSearch ? (
+                    <Link
+                        className="temp-card"
+                        style={{ width: 'fit-content' }}
+                        to={'/collection'}
+                        search={{
+                            ...search.lastSearch,
+                            id: search.lastSearch.id ?? 1,
+                        }}
+                    >
+                        &lt; Til baka í leit{' '}
+                        {search.lastSearch.query && (
+                            <i>(„{search.lastSearch.query}“)</i>
+                        )}
+                    </Link>
+                ) : (
+                    <Link
+                        className="temp-card"
+                        style={{ width: 'fit-content' }}
+                        to={'/collection'}
+                        search={{
+                            id: 1,
+                        }}
+                    >
+                        &lt; Öll tákn{' '}
+                    </Link>
+                )}
+                {navigator.share && (
+                    <div
+                        className="temp-card"
+                        style={{ width: 'fit-content', cursor: 'pointer' }}
+                        to={'/collection'}
+                        onClick={shareSign}
+                    >
+                        <span className="material-icons">send</span>
+                    </div>
+                )}
+            </div>
             {/* <Link
                 className="temp-card"
                 style={{ width: 'fit-content' }}
@@ -180,10 +213,13 @@ function SignPage() {
                             gap: '1rem',
                         }}
                     >
-                        <h2 className="sign-phrase">{sign.phrase}</h2>
+                        <Link>
+                            <h2 className="sign-phrase">{sign.phrase}</h2>
+                        </Link>
                         <AddSignToCollection
                             id={sign.id}
                             collections={user.collections}
+                            zIndex={500}
                         />
                     </div>
                     <SignPlayer
@@ -192,65 +228,66 @@ function SignPage() {
                         title={sign.phrase}
                     />
                 </div>
-                <div className="sign-info">
+                <div className="sign-info properties">
                     {sign.efnisflokkar && (
-                        <div className="sign-info-item">
+                        <div className="sign-info-item property">
                             <h3>Efnisflokkar</h3>
                             {sign.efnisflokkar.map((efnisflokkur) => {
                                 return (
                                     <div key={efnisflokkur}>
-                                        <Link
+                                        {/* <Link
                                             to={`/efnisflokkar/${efnisflokkur}`}
-                                        >
-                                            {efnisflokkur}
-                                        </Link>
+                                        > */}
+                                        {efnisflokkur}
+                                        {/* </Link> */}
                                     </div>
                                 )
                             })}
                         </div>
                     )}
                     {sign.ordflokkur && (
-                        <div className="sign-info-item">
+                        <div className="sign-info-item property">
                             <h3>Orðflokkur</h3>
                             <div>
-                                <Link to={`/ordflokkar/${sign.ordflokkur}`}>
-                                    {sign.ordflokkur}
-                                </Link>
+                                {/* <Link to={`/ordflokkar/${sign.ordflokkur}`}> */}
+                                {sign.ordflokkur}
+                                {/* </Link> */}
                             </div>
                         </div>
                     )}
                     {sign.myndunarstadur && (
-                        <div className="sign-info-item">
+                        <div className="sign-info-item property">
                             <h3>Myndunarstaður</h3>
                             <div>
-                                <Link
+                                {/* <Link
                                     to={`/myndunarstadir/${sign.myndunarstadur}`}
-                                >
-                                    {sign.myndunarstadur}
-                                </Link>
+                                > */}
+                                {sign.myndunarstadur}
+                                {/* </Link> */}
                             </div>
                         </div>
                     )}
                     {sign.handform && (
-                        <div className="sign-info-item">
-                            <Link to={`/handform/${sign.handform}`}>
-                                <h3>Handform</h3>
-                                <img
+                        <div className="sign-info-item property">
+                            <h3>Handform</h3>
+                            {/* <Link to={`/handform/${sign.handform}`}> */}
+                            {sign.handform}
+
+                            {/* <img
                                     className="handform-img"
                                     src={`/assets/itm-images/handform/${sign.handform}.png`}
-                                />
-                                <div>{sign.handform}</div>
-                            </Link>
+                                /> */}
+                            {/* </Link> */}
                         </div>
                     )}
                     {sign.munnhreyfing && (
-                        <div className="sign-info-item">
+                        <div className="sign-info-item property">
                             <h3>Munnhreyfing</h3>
                             <div>{sign.munnhreyfing}</div>
                         </div>
                     )}
                     {sign.description && (
-                        <div className="sign-info-item">
+                        <div className="sign-info-item property">
                             <h3>Lýsing</h3>
                             <div>
                                 {/* {sign.description} */}
@@ -286,10 +323,6 @@ function SignPage() {
                             return (
                                 id && (
                                     <div className="alternate-video" key={id}>
-                                        {/* <YoutubeEmbed
-                                        embedId={id}
-                                        title={sign.phrase}
-                                    /> */}
                                         <SignPlayer
                                             videoId={id}
                                             title={sign.phrase}

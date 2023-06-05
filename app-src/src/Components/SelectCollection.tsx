@@ -11,45 +11,62 @@ export function SelectCollection({ currentCollection, collections }) {
                     as="div"
                     style={{ cursor: 'pointer', textDecoration: 'underline' }}
                 >
-                    {currentCollection && <h2>{currentCollection}</h2>}
+                    {currentCollection && <h3>{currentCollection}</h3>}
                 </Listbox.Button>
+                {/* <Listbox.Label>Velja táknasafn</Listbox.Label> */}
                 <Listbox.Options
                     style={{
                         // position: 'absolute',
                         width: 'fit-content',
                         margin: 'auto',
+                        left: 0,
+                        right: 0,
+                        padding: 0,
                         textAlign: 'center',
                         cursor: 'pointer',
+                        outline: '1px solid var(--main-text-color)',
+                        // borderRadius: '10px',
                     }}
                 >
-                    {collections.map((collection) => (
-                        <Listbox.Option
-                            key={collection.id}
-                            style={{
-                                position: 'relative',
-                                textAlign: 'center',
-                                backgroundColor: 'var(--background-color)',
-                                borderBottom: '1px solid gray',
-                                padding: '0.5rem 0.5rem',
-                            }}
-                            value={collection.id}
-                            onClick={() => {
-                                navigate({
-                                    search: (search) => ({
-                                        ...search,
-                                        id: collection.id,
-                                        scroll: 0,
-                                    }),
-                                })
-                            }}
-                        >
-                            {({ selected }) => (
-                                <>
-                                    <span>{collection.name}</span>
-                                </>
-                            )}
-                        </Listbox.Option>
-                    ))}
+                    {collections.map(
+                        (
+                            collection: { id: string; name: string },
+                            idx: number
+                        ) => (
+                            <Listbox.Option
+                                key={collection.id}
+                                style={{
+                                    position: 'relative',
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--background-color)',
+                                    borderBottom:
+                                        idx != collections.length - 1
+                                            ? '1px solid gray'
+                                            : undefined,
+                                    padding: '0.8rem 0.8rem',
+                                    boxShadow: 'var(--card-box-shadow)',
+                                }}
+                                value={collection.id}
+                                onClick={() => {
+                                    navigate({
+                                        search: (search) => ({
+                                            ...search,
+                                            query: '',
+                                            id: collection.id,
+                                            scroll: 0,
+                                            page: 1,
+                                        }),
+                                    })
+                                }}
+                            >
+                                {({ selected }) => (
+                                    <>
+                                        <span>{collection.name}</span>
+                                    </>
+                                )}
+                            </Listbox.Option>
+                        )
+                    )}
                 </Listbox.Options>
                 {/* </Transition> */}
             </Listbox>
