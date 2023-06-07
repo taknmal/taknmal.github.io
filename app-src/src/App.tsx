@@ -46,6 +46,12 @@ const queryClient = new QueryClient({
 })
 
 function App() {
+    const [standalone, setStandalone] = useState(false)
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setStandalone(true);
+          }
+    })
     const [promiseWorkerLoaded, setPromiseWorkerLoaded] = useState(false)
     const [currentTheme, setCurrentTheme] = useState(
         window.localStorage.getItem('theme_mode') ?? 'light'
@@ -304,6 +310,55 @@ function App() {
                             <DarkModeSwitch setCurrentTheme={setCurrentTheme} />
                             {/* <ReactLocationDevtools /> */}
                         </div>
+
+                        <div
+                            className="dark-mode-switch-container"
+                            style={{
+                                position: 'fixed',
+                                top: 'env(safe-area-inset-top)',
+                                left: '0',
+                                padding: '1rem',
+                                zIndex: 9999,
+                                display:standalone? 'none' : 'flex',
+                                alignItems:'center',
+                                cursor:'pointer'
+                            }}
+                            onClick={() => {
+                                const el = document.getElementById('app-save-modal') as HTMLDialogElement
+                                el.showModal()
+                            }}
+                        >
+                            <span className='material-icons' style={{fontSize:'2rem'}}>install_mobile</span><span>Vista app</span>
+                            {/* <ReactLocationDevtools /> */}
+                        </div>
+                        <dialog id='app-save-modal' onClick={(ev) => {
+                    const dialog = document.getElementById(
+                        'app-save-modal'
+                    ) as HTMLDialogElement
+                    if (ev.target == dialog) {
+                        dialog.close()
+                    }
+                }}
+                style={{display:'flex',flexDirection:'column',justifyContent:'space-between', padding:'2rem',maxWidth:'80%'}}>
+                <form method="dialog" style={{}}>
+                    <button style={{maxWidth:'2rem'}}>x</button>
+
+                </form>
+                    <div>
+                        <h3>Vista app á síma</h3>
+                        <p>
+                            Ef þú vilt vista síðuna sem app á símanum þínum geturðu gert eftirfarandi:
+                        </p>
+                        <p>
+                        <b>iPhone:</b> Valið „share“ takkann og ýtt á Add to home screen.
+
+                        </p>
+                        <p>
+                        <b>Android:</b> Sumir símar birta skilaboð sem bjóða þér að „installa“ appinu. Á öðrum þarftu að velja share takkann og annað hvort „Install app“ eða „Add to home screen“.
+                        </p>
+                    </div>
+
+                        </dialog>
                     </Router>
                     <SignWikiCredits />
                 </ThemeContext.Provider>
