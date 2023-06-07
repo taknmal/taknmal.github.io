@@ -329,6 +329,7 @@ function App() {
                             }}
                         >
                             <span className='material-icons' style={{fontSize:'2rem'}}>install_mobile</span><span>Vista app</span>
+                            
                             {/* <ReactLocationDevtools /> */}
                         </div>
                         <dialog id='app-save-modal' onClick={(ev) => {
@@ -338,8 +339,10 @@ function App() {
                     if (ev.target == dialog) {
                         dialog.close()
                     }
-                }}
-                style={{display:'flex',flexDirection:'column',justifyContent:'space-between', padding:'2rem',maxWidth:'80%'}}>
+                }}>
+                    <div                 style={{display:'flex',flexDirection:'column',justifyContent:'space-between', padding:'2rem',maxWidth:'70vw'}}
+>
+
                 <form method="dialog" style={{}}>
                     <button style={{maxWidth:'2rem'}}>x</button>
 
@@ -357,12 +360,14 @@ function App() {
                         <b>Android:</b> Sumir símar birta skilaboð sem bjóða þér að „installa“ appinu. Á öðrum þarftu að velja share takkann og annað hvort „Install app“ eða „Add to home screen“.
                         </p>
                     </div>
+                    </div>
 
                         </dialog>
                     </Router>
                     <SignWikiCredits />
                 </ThemeContext.Provider>
             </QueryClientProvider>
+                        
         </Suspense>
     )
 }
