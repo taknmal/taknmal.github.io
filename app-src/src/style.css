@@ -112,7 +112,7 @@ ul li {
 }
 
 header {
-    position: sticky;
+    position: auto;
     text-align: center;
     /* padding-top: calc(env(safe-area-inset-top, 3rem) + 1em); */
     padding-bottom: 0.5rem;
@@ -126,11 +126,11 @@ header {
     z-index: 1000;
     /* border-bottom: 1px solid var(--main-text-color); */
 }
-@media screen and ((max-height: 400px) or (min-aspect-ratio: 2/1)) {
+/* @media screen and ((min-height: 400px)) {
     header {
-        position: relative;
+        position: sticky;
     }
-}
+} */
 
 .heading {
     text-align: center;
