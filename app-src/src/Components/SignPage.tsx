@@ -217,7 +217,9 @@ function SignPage() {
                             <h2 className="sign-phrase">{sign.phrase}</h2>
                         </Link>
                         <AddSignToCollection
+                        centered
                             id={sign.id}
+                            sign={sign}
                             collections={user.collections}
                             zIndex={500}
                         />

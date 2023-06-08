@@ -109,6 +109,12 @@ const deleteCollection = async ({ collectionId }: { collectionId: number }) => {
     `)
 }
 
+// left join collection
+// on collection.id = ${collectionId}
+// left join collection as multiCollection
+// on multiCollection.id = sign_collection.collection_id
+
+
 const getSignByIdJson = async (id: number) => {
     console.log('getting sign by id with json: ' + id)
     const stmt = `
@@ -119,6 +125,7 @@ const getSignByIdJson = async (id: number) => {
             'videos', json_group_array(distinct json_object('rank',sign_video.rank,'video_id', sign_video.video_id)),
             'efnisflokkar', json_group_array(distinct efnisflokkur.text),
             'related_signs', json_group_array(distinct json_object('phrase',related.phrase,'id', related.id)),
+            'collections', json_group_array(distinct json_object('name',collection.name,'id',collection.id)),
             'myndunarstadur',sign.myndunarstadur,
             'ordflokkur',sign.ordflokkur,
             'islenska',sign.islenska,
@@ -143,6 +150,8 @@ const getSignByIdJson = async (id: number) => {
                 SELECT related_id from sign_related where sign_id = ${id}
                 )
             ) as related
+        LEFT JOIN sign_collection ON sign.id = sign_collection.sign_id
+        LEFT JOIN collection ON sign_collection.collection_id = collection.id
         WHERE sign.id = ${id}
         GROUP BY sign.id
     `
@@ -707,9 +716,9 @@ const searchPagedCollectionByIdRefactor = async ({
     let totalSignCount = 0
     let totalPages = 0
     const signDetails = {
-        handform: handform?.length ? handform : [],
+        'sign.handform': handform?.length ? handform : [],
         myndunarstadur: myndunarstadur?.length ? myndunarstadur : [],
-        ordflokkur: ordflokkur?.length ? ordflokkur : [],
+        'sign.ordflokkur': ordflokkur?.length ? ordflokkur : [],
         efnisflokkur: efnisflokkur?.length ? efnisflokkur : [],
     }
 
@@ -745,13 +754,36 @@ const searchPagedCollectionByIdRefactor = async ({
         searchValue = searchValue.substring(0, searchValue.length - 1)
     }
 
+
+    const selectClauseJSON = `
+        SELECT 
+            distinct json_object(
+                'id',sign.id,
+                'phrase',sign.phrase,
+                'videos', json_group_array(distinct json_object('rank',sign_video.rank,'video_id', sign_video.video_id)),
+                'efnisflokkur', json_group_array(distinct efnisflokkur.text),
+                --'related_signs', json_group_array(distinct json_object('phrase',related.phrase,'id', related.id)),
+                --'related_signs', json_group_array(related.phrase),
+                'related_signs', group_concat(related.phrase),
+                'myndunarstadur',sign.myndunarstadur,
+                'ordflokkur',sign.ordflokkur,
+                'islenska',sign.islenska,
+                'taknmal',sign.taknmal,
+                'description',sign.description,
+                'munnhreyfing', sign.munnhreyfing,
+                'handform', sign.handform,
+                'collections', json_group_array(multiCollection.id),
+                'sign_count', count(*) over()
+            ) as sign
+        `
+
     const selectClause = `
         select distinct sign.id as sign_id,
         sign.phrase as phrase,
         sign_video.video_id as youtube_id,
         sign_fts.related_signs as related_signs,
         collection.name as collection_name,
-        group_concat(multiCollection.id) as collections,
+        group_concat(distinct multiCollection.id) as collections,
         sign_collection.date_added as date_added,
         sign.myndunarstadur as myndunarstadur,
         sign.ordflokkur as ordflokkur,
@@ -776,6 +808,8 @@ const searchPagedCollectionByIdRefactor = async ({
         ON sign.id = sign_efnisflokkur.sign_id
         LEFT JOIN efnisflokkur
         ON efnisflokkur.id = sign_efnisflokkur.efnisflokkur_id
+        --LEFT JOIN sign_related ON sign_related.sign_id = sign.id
+        --LEFT JOIN sign as related ON related.id = sign_related.related_id
         `
 
     if (!searchValue) {
@@ -867,6 +901,7 @@ const searchPagedCollectionByIdRefactor = async ({
         `
     }
 
+
     DB_CONSOLE_LOGS && console.log(stmt)
     let result: {
         sign_id: number
@@ -879,6 +914,16 @@ const searchPagedCollectionByIdRefactor = async ({
         in_collection?: boolean
         sign_count?: number
     }[] = await query(stmt)
+    result = result.map(res => {
+        return {...res,collections: res.collections.split(',').map(collection => Number(collection))}
+    })
+    // result = result.map(res => {
+    //     console.log(JSON.parse(res.sign))
+    //     const currentSign = JSON.parse(JSON.parse(res.sign))
+    //     return currentSign
+    //     return Object.fromEntries(Object.keys(currentSign).map(key => [key, JSON.parse(currentSign[key])]))
+    //     // return JSON.parse(Object.keys(JSON.parse(res.sign)).)
+    // })
     DB_CONSOLE_LOGS && console.log(result)
     totalSignCount = (result.length && result[0].sign_count) || 0
     totalPages = Math.ceil(totalSignCount / limit)

@@ -72,6 +72,7 @@ export function SignCollectionItem({
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <AddSignToCollection
                         id={sign.sign_id}
+                        sign={sign}
                         collections={user.collections}
                     />
 
