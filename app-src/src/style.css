@@ -112,7 +112,7 @@ ul li {
 }
 
 header {
-    position: auto;
+    /* position: auto; */
     text-align: center;
     /* padding-top: calc(env(safe-area-inset-top, 3rem) + 1em); */
     padding-bottom: 0.5rem;
@@ -131,6 +131,11 @@ header {
         position: sticky;
     }
 } */
+@media screen and ((display-mode:standalone)) {
+    header {
+        display: none;
+    }
+}
 
 .heading {
     text-align: center;

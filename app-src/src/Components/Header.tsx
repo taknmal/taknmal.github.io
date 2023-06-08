@@ -13,8 +13,10 @@ export function Header({ children }: { children?: any }) {
 
 
     return (
-        <header style={{ backgroundColor: 'var(--background-color)' }}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+        <header style={{ backgroundColor: 'var(--background-color)', position: standalone? 'sticky' : undefined,top:'0.5rem' }}>
+            <div 
+            style={{display:'flex',flexBasis:'100%',justifyContent:'space-evenly',alignItems:'center',maxHeight:'2rem',}}
+            >
             <div
                             className="dark-mode-switch-container"
                             style={{
@@ -23,8 +25,10 @@ export function Header({ children }: { children?: any }) {
                             //     left: '0',
                                 // padding: '1rem',
                             //     zIndex: 9999,
-                                display:standalone? 'none' : 'flex',
-                                alignItems:'center',
+                            // display:standalone? 'none' : 'flex',
+                            display:'flex',
+                            visibility:standalone? undefined : 'hidden',
+                            alignItems:'center',
                                 cursor:'pointer'
                             }}
                             onClick={() => {
@@ -36,6 +40,7 @@ export function Header({ children }: { children?: any }) {
                             
                         </div>
             <Link
+            style={{paddingBottom:'0.5rem'}}
                 to={'/'}
                 search={(old) => ({ ...old, scroll: 0 })}
                 className="heading"
@@ -45,6 +50,7 @@ export function Header({ children }: { children?: any }) {
             <div
                             className="dark-mode-switch-container"
                             style={{
+                                
                                 // position: 'fixed',
                                 // top: 'env(safe-area-inset-top)',
                                 // right: '0',
