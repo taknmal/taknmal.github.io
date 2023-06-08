@@ -16,6 +16,7 @@ export function AddSignToCollection({
     zIndex?: number
     centered?:boolean
 }) {
+    const [updateKey, setUpdateKey] = useState(0)
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     // const [icon, setIcon] = useState('add')
@@ -68,7 +69,7 @@ export function AddSignToCollection({
                                         //         '1px solid var(--main-text-color)',
                                         //     boxShadow: 'var(--card-box-shadow)',
                                         }}
-                                        value={collection.id}
+                                        value={updateKey}
                                         onClick={() => {
                                             // setIcon('rotate_right')
                                             const currentId = collection.id
@@ -85,6 +86,7 @@ export function AddSignToCollection({
                                                         old[currentId] = 'check'
                                                         return old
                                                     })
+                                                    setUpdateKey((old) => old+1)
                                                     // setIcon('check')
                                                     // setTimeout(() => {
                                                     //     setIcon('add')
