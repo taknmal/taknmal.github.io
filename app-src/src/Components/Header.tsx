@@ -13,32 +13,52 @@ export function Header({ children }: { children?: any }) {
 
 
     return (
-        <header style={{ backgroundColor: 'var(--background-color)', position: standalone? 'sticky' : undefined,top:'0.5rem' }}>
+        <header 
+        style={{ backgroundColor: 'var(--background-color)', position: standalone? 'sticky' : undefined,top:'0',padding:'2rem 1rem' }}
+        >
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+
+<div
+    className="dark-mode-switch-container"
+    style={{
+        position: 'static',
+        top: 'env(safe-area-inset-top)',
+        left: '0',
+        padding: 0,
+        zIndex: 9999,
+    // display:standalone? 'none' : 'flex',
+    display:'flex',
+    flexDirection:'column',
+    visibility:!standalone? undefined : 'hidden',
+    alignItems:'center',
+        cursor:'pointer'
+    }}
+    onClick={() => {
+        const el = document.getElementById('app-save-modal') as HTMLDialogElement
+        el.showModal()
+    }}
+>
+    <span className='material-icons'>install_mobile</span><span>Vista app</span>
+    
+</div>
+<div
+    className="dark-mode-switch-container"
+    style={{
+        
+        position: 'static',
+        top: 'env(safe-area-inset-top)',
+        right: '0',
+        padding: 0,
+        zIndex: 9999,
+    }}
+>
+    <DarkModeSwitch/>
+</div>
+</div>
             <div 
             style={{display:'flex',flexBasis:'100%',justifyContent:'space-evenly',alignItems:'center',maxHeight:'2rem',}}
             >
-            <div
-                            className="dark-mode-switch-container"
-                            style={{
-                            //     position: 'fixed',
-                            //     top: 'env(safe-area-inset-top)',
-                            //     left: '0',
-                                // padding: '1rem',
-                            //     zIndex: 9999,
-                            // display:standalone? 'none' : 'flex',
-                            display:'flex',
-                            visibility:standalone? undefined : 'hidden',
-                            alignItems:'center',
-                                cursor:'pointer'
-                            }}
-                            onClick={() => {
-                                const el = document.getElementById('app-save-modal') as HTMLDialogElement
-                                el.showModal()
-                            }}
-                        >
-                            <span className='material-icons' style={{fontSize:'2rem'}}>install_mobile</span><span>Vista app</span>
-                            
-                        </div>
+            
             <Link
             style={{paddingBottom:'0.5rem'}}
                 to={'/'}
@@ -47,19 +67,7 @@ export function Header({ children }: { children?: any }) {
             >
                 Íslenskt táknmál
             </Link>
-            <div
-                            className="dark-mode-switch-container"
-                            style={{
-                                
-                                // position: 'fixed',
-                                // top: 'env(safe-area-inset-top)',
-                                // right: '0',
-                                // padding: '1rem',
-                                zIndex: 9999,
-                            }}
-                        >
-                            <DarkModeSwitch/>
-                        </div>
+           
             </div>
             <AppNavBar type="header" />
             {children}

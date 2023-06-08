@@ -295,6 +295,7 @@ function App() {
                             },
                         ]}
                     >
+                        
                         <Outlet />
                         <AppNavBar type="footer" />
                         {/* <div
@@ -342,6 +343,8 @@ function App() {
                     </div>
 
                         </dialog>
+
+                        
                     </Router>
                     <SignWikiCredits />
                 </ThemeContext.Provider>

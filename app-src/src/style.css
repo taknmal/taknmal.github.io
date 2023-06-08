@@ -26,6 +26,9 @@ dialog select {
 
 .dark-mode-switch-container {
     padding: calc(env(safe-area-inset-top) + 1rem);
+    position:sticky;
+    top:0;
+    /* background-color: var(--background-color); */
 }
 
 :root input {
@@ -71,8 +74,8 @@ body {
     margin: auto;
     padding-right: env(safe-area-inset-right, 0.3rem);
     padding-left: env(safe-area-inset-left, 0.3rem);
-    padding-top: env(safe-area-inset-top, 0.3rem);
-    /* padding-bottom: calc(env(safe-area-inset-bottom, 0.3rem) + 0.5rem); */
+    /* padding-top: env(safe-area-inset-top, 0.3rem); */
+    padding-bottom: calc(env(safe-area-inset-bottom, 0.3rem) + 6rem);
     /* height: calc(100% + env(safe-area-inset-bottom)); */
     /* height: calc(100% + env(safe-area-inset-top)); */
     height: 100%;
@@ -106,7 +109,7 @@ ul li {
     justify-content: space-between;
     /* padding-top: calc(env(safe-area-inset-top, 1rem) + 1em); */
     /* padding-top: calc(env(safe-area-inset-top, 1rem)); */
-    /* padding-top: calc(env(safe-area-inset-top, 3rem) + 1em); */
+    padding-top: calc(env(safe-area-inset-top, 3rem) + 1em);
     box-sizing: border-box;
     /* background-color: red; */
 }
@@ -143,6 +146,7 @@ header {
     font-family: 'Faustina';
     text-decoration: none;
     font-size: 2rem;
+    
     /* font-style: italic; */
     /* padding: 1rem 1rem; */
 }
