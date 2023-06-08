@@ -80,7 +80,7 @@ function App() {
     return (
         <Suspense>
             <QueryClientProvider client={queryClient}>
-                <ThemeContext.Provider value={currentTheme}>
+                <ThemeContext.Provider value={{currentTheme,setCurrentTheme}}>
                     <Router
                         location={reactLocation}
                         basepath="/"
@@ -297,7 +297,7 @@ function App() {
                     >
                         <Outlet />
                         <AppNavBar type="footer" />
-                        <div
+                        {/* <div
                             className="dark-mode-switch-container"
                             style={{
                                 position: 'fixed',
@@ -308,30 +308,9 @@ function App() {
                             }}
                         >
                             <DarkModeSwitch setCurrentTheme={setCurrentTheme} />
-                            {/* <ReactLocationDevtools /> */}
-                        </div>
+                        </div> */}
 
-                        <div
-                            className="dark-mode-switch-container"
-                            style={{
-                                position: 'fixed',
-                                top: 'env(safe-area-inset-top)',
-                                left: '0',
-                                padding: '1rem',
-                                zIndex: 9999,
-                                display:standalone? 'none' : 'flex',
-                                alignItems:'center',
-                                cursor:'pointer'
-                            }}
-                            onClick={() => {
-                                const el = document.getElementById('app-save-modal') as HTMLDialogElement
-                                el.showModal()
-                            }}
-                        >
-                            <span className='material-icons' style={{fontSize:'2rem'}}>install_mobile</span><span>Vista app</span>
-                            
-                            {/* <ReactLocationDevtools /> */}
-                        </div>
+                        
                         <dialog id='app-save-modal' onClick={(ev) => {
                     const dialog = document.getElementById(
                         'app-save-modal'
