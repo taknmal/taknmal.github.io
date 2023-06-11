@@ -13,6 +13,7 @@ import './signpage.css'
 import { useEffect } from 'react'
 import { SignPlayer } from './SignPlayer'
 import { Header } from './Header'
+import { Footer } from './Footer'
 import { AddSignToCollection } from './AddSignToCollection'
 
 type MyLocationGenerics = MakeGenerics<{
