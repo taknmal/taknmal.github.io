@@ -34,6 +34,7 @@ import { MyLocationGenerics } from './Components/Generics'
 import { RawSql } from './Components/RawSql'
 import { GetCollections } from './Components/GetCollections'
 import { Footer } from './Components/Footer'
+import { Header } from './Components/Header'
 
 const reactLocation = new ReactLocation()
 
@@ -50,8 +51,8 @@ function App() {
     const [standalone, setStandalone] = useState(false)
     useEffect(() => {
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            setStandalone(true);
-          }
+            setStandalone(true)
+        }
     })
     const [promiseWorkerLoaded, setPromiseWorkerLoaded] = useState(false)
     const [currentTheme, setCurrentTheme] = useState(
@@ -81,7 +82,9 @@ function App() {
     return (
         <Suspense>
             <QueryClientProvider client={queryClient}>
-                <ThemeContext.Provider value={{currentTheme,setCurrentTheme}}>
+                <ThemeContext.Provider
+                    value={{ currentTheme, setCurrentTheme }}
+                >
                     <Router
                         location={reactLocation}
                         basepath="/"
@@ -296,7 +299,6 @@ function App() {
                             },
                         ]}
                     >
-                        
                         <Outlet />
                         {/* <AppNavBar type="footer" /> */}
                         {/* <div
@@ -312,45 +314,55 @@ function App() {
                             <DarkModeSwitch setCurrentTheme={setCurrentTheme} />
                         </div> */}
 
-                        
-                        <dialog id='app-save-modal' onClick={(ev) => {
-                    const dialog = document.getElementById(
-                        'app-save-modal'
-                    ) as HTMLDialogElement
-                    if (ev.target == dialog) {
-                        dialog.close()
-                    }
-                }}>
-                    <div                 style={{display:'flex',flexDirection:'column',justifyContent:'space-between', padding:'2rem',maxWidth:'70vw'}}
->
-
-                <form method="dialog" style={{}}>
-                    <button style={{maxWidth:'2rem'}}>x</button>
-
-                </form>
-                    <div>
-                        <h3>Vista app á síma</h3>
-                        <p>
-                            Ef þú vilt vista síðuna sem app á símanum þínum geturðu gert eftirfarandi:
-                        </p>
-                        <p>
-                        <b>iPhone:</b> Valið „share“ takkann og ýtt á Add to home screen.
-
-                        </p>
-                        <p>
-                        <b>Android:</b> Sumir símar birta skilaboð sem bjóða þér að „installa“ appinu. Á öðrum þarftu að velja share takkann og annað hvort „Install app“ eða „Add to home screen“.
-                        </p>
-                    </div>
-                    </div>
-
+                        <dialog
+                            id="app-save-modal"
+                            onClick={(ev) => {
+                                const dialog = document.getElementById(
+                                    'app-save-modal'
+                                ) as HTMLDialogElement
+                                if (ev.target == dialog) {
+                                    dialog.close()
+                                }
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    padding: '2rem',
+                                    maxWidth: '70vw',
+                                }}
+                            >
+                                <form method="dialog" style={{}}>
+                                    <button style={{ maxWidth: '2rem' }}>
+                                        x
+                                    </button>
+                                </form>
+                                <div>
+                                    <h3>Vista app á síma</h3>
+                                    <p>
+                                        Ef þú vilt vista síðuna sem app á
+                                        símanum þínum geturðu gert eftirfarandi:
+                                    </p>
+                                    <p>
+                                        <b>iPhone:</b> Valið „share“ takkann og
+                                        ýtt á Add to home screen.
+                                    </p>
+                                    <p>
+                                        <b>Android:</b> Sumir símar birta
+                                        skilaboð sem bjóða þér að „installa“
+                                        appinu. Á öðrum þarftu að velja share
+                                        takkann og annað hvort „Install app“ eða
+                                        „Add to home screen“.
+                                    </p>
+                                </div>
+                            </div>
                         </dialog>
-
-                        
                     </Router>
                     {/* <SignWikiCredits /> */}
                 </ThemeContext.Provider>
             </QueryClientProvider>
-                        
         </Suspense>
     )
 }
