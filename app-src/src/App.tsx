@@ -33,6 +33,7 @@ import { SignCollectionPage } from './Components/SignCollectionPage'
 import { MyLocationGenerics } from './Components/Generics'
 import { RawSql } from './Components/RawSql'
 import { GetCollections } from './Components/GetCollections'
+import { Footer } from './Components/Footer'
 
 const reactLocation = new ReactLocation()
 
@@ -297,7 +298,8 @@ function App() {
                     >
                         
                         <Outlet />
-                        <AppNavBar type="footer" />
+                        <Footer/>
+                        {/* <AppNavBar type="footer" /> */}
                         {/* <div
                             className="dark-mode-switch-container"
                             style={{
@@ -346,7 +348,7 @@ function App() {
 
                         
                     </Router>
-                    <SignWikiCredits />
+                    {/* <SignWikiCredits /> */}
                 </ThemeContext.Provider>
             </QueryClientProvider>
                         
