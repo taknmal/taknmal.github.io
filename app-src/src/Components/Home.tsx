@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Header } from './Header'
 import './Home.css'
 import { ThemeContext } from './ThemeContext'
+import { Footer } from './Footer'
 export function HomePage() {
     const currentTheme = useContext(ThemeContext)
     const [img, setImg] = useState(
@@ -30,6 +31,7 @@ export function HomePage() {
                     <div className="card">what</div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

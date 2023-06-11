@@ -298,7 +298,6 @@ function App() {
                     >
                         
                         <Outlet />
-                        <Footer/>
                         {/* <AppNavBar type="footer" /> */}
                         {/* <div
                             className="dark-mode-switch-container"

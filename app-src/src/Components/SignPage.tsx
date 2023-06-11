@@ -376,6 +376,7 @@ function SignPage() {
                     </div>
                 </div>
             )}
+            <Footer/>
         </div>
     )
 }

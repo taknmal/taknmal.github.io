@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Header } from './Header'
 import { query } from '../db'
 import './RawSql.css'
+import { Footer } from './Footer'
 
 export function RawSql() {
     const [sqlString, setSqlString] = useState('')
@@ -43,6 +44,7 @@ export function RawSql() {
                     })}
                 </table>
             )}
+            <Footer/>
         </div>
     )
 }

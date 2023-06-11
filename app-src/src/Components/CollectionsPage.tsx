@@ -18,6 +18,7 @@ import {
 } from '../db'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import './CollectionsPage.css'
+import { Footer } from './Footer'
 type UserGenerics = MakeGenerics<{
     LoaderData: {
         user?: {
@@ -458,6 +459,7 @@ export function CollectionsPage() {
                     Vista mín gögn sem sqlite3 gagnasafn.
                 </button>
             </div>
+            <Footer/>
         </>
     )
 }

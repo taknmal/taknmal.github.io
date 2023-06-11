@@ -16,6 +16,7 @@ import { MyLocationGenerics } from './Generics'
 import { SignCollectionItem } from './SignCollectionItem'
 import { SelectCollection } from './SelectCollection'
 import { SignFilter } from './SignFilter'
+import { Footer } from './Footer'
 
 export function SignCollectionPage() {
     const queryClient = useQueryClient()
@@ -240,6 +241,7 @@ export function SignCollectionPage() {
                         )}
                 </div>
             )}
+            <Footer/>
         </>
     )
 }
