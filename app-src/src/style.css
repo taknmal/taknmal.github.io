@@ -136,7 +136,7 @@ header {
 } */
 @media screen and ((display-mode:standalone)) {
     header {
-        display: none;
+        /* display: none; */
     }
 }
 

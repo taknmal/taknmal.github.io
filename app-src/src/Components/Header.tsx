@@ -14,7 +14,12 @@ export function Header({ children }: { children?: any }) {
 
     return (
         <header 
-        style={{ backgroundColor: 'var(--background-color)', position: standalone? 'sticky' : undefined,top:'0',padding:'2rem 1rem' }}
+        style={{ 
+            backgroundColor: 'var(--background-color)', 
+            // position: standalone? 'sticky' : undefined,
+            top:'0',
+            padding:'2rem 1rem' 
+        }}
         >
             <div style={{display:'flex', justifyContent:'space-between'}}>
 
@@ -30,7 +35,7 @@ export function Header({ children }: { children?: any }) {
     display:'flex',
     flexDirection:'column',
     visibility:!standalone? undefined : 'hidden',
-    alignItems:'center',
+    alignItems:'center', 
         cursor:'pointer'
     }}
     onClick={() => {
